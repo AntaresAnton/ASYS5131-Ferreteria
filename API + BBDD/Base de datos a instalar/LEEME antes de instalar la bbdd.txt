@@ -1,0 +1,4 @@
+Para asegurar que la bbdd funcione correctamente, debes crear primero las tablas, y luego importar los datos. 
+la otra opción es que en el phpmyadmin, o en el programa que utilices, crees la base de datos manualmente con los parámetros requeridos. eso.
+
+(más que nada por que al insertar las recetas te puede aparecer un error, por las cremillas, comillas simples y todo eso.)
