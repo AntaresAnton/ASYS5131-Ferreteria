@@ -7,18 +7,18 @@ const getRecetas = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
         `SELECT  
-        recetas_del_mundo.id_receta, 
-        recetas_del_mundo.nombre_receta, 
-        recetas_del_mundo.ingrediente_receta, 
-        recetas_del_mundo.anio, 
-        recetas_del_mundo.pais_receta, 
-        recetas_del_mundo.preparacion_receta, 
-        recetas_del_mundo.fecha_creacion, 
-        recetas_del_mundo.url_imagen_receta, 
-        recetas_del_mundo.categoria,
+        test.id_receta, 
+        test.nombre_receta, 
+        test.ingrediente_receta, 
+        test.anio, 
+        test.pais_receta, 
+        test.preparacion_receta, 
+        test.fecha_creacion, 
+        test.url_imagen_receta, 
+        test.categoria,
         usuarios.nombres as "creado_por" 
-        FROM recetas_del_mundo
-        INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user;`);
+        FROM test
+        INNER JOIN usuarios ON test.id_user = usuarios.id_user;`);
         
         // Verificar si hay resultados
         if (result.length === 0) {
@@ -40,7 +40,7 @@ const getPaises = async (req, res) => {
     try {
         const connection = await getConnection();
         const [result] = await connection.query(
-        `SELECT DISTINCT pais_receta FROM recetas_del_mundo;`);
+        `SELECT DISTINCT pais_receta FROM test;`);
         
         // Verificar si hay resultados
         if (result.length === 0) {
@@ -62,18 +62,18 @@ const recetaRandom = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
         `SELECT  
-        recetas_del_mundo.id_receta, 
-        recetas_del_mundo.nombre_receta, 
-        recetas_del_mundo.ingrediente_receta, 
-        recetas_del_mundo.anio, 
-        recetas_del_mundo.pais_receta, 
-        recetas_del_mundo.preparacion_receta, 
-        recetas_del_mundo.fecha_creacion, 
-        recetas_del_mundo.url_imagen_receta, 
-        recetas_del_mundo.categoria,
+        test.id_receta, 
+        test.nombre_receta, 
+        test.ingrediente_receta, 
+        test.anio, 
+        test.pais_receta, 
+        test.preparacion_receta, 
+        test.fecha_creacion, 
+        test.url_imagen_receta, 
+        test.categoria,
         usuarios.nombres as "creado_por" 
-        FROM recetas_del_mundo
-        INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user
+        FROM test
+        INNER JOIN usuarios ON test.id_user = usuarios.id_user
         ORDER BY RAND()
         LIMIT 1;`);
         
@@ -96,7 +96,7 @@ const getCategorias = async (req, res) => {
     try {
         const connection = await getConnection();
         const [result] = await connection.query(
-        `SELECT DISTINCT categoria FROM recetas_del_mundo;`);
+        `SELECT DISTINCT categoria FROM test;`);
         
         // Verificar si hay resultados
         if (result.length === 0) {
@@ -120,19 +120,19 @@ const getReceta = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
             `SELECT  
-            recetas_del_mundo.id_receta, 
-            recetas_del_mundo.nombre_receta, 
-            recetas_del_mundo.ingrediente_receta, 
-            recetas_del_mundo.anio, 
-            recetas_del_mundo.pais_receta, 
-            recetas_del_mundo.preparacion_receta, 
-            recetas_del_mundo.fecha_creacion, 
-            recetas_del_mundo.categoria,
-            recetas_del_mundo.url_imagen_receta, 
+            test.id_receta, 
+            test.nombre_receta, 
+            test.ingrediente_receta, 
+            test.anio, 
+            test.pais_receta, 
+            test.preparacion_receta, 
+            test.fecha_creacion, 
+            test.categoria,
+            test.url_imagen_receta, 
             usuarios.nombres as "creado_por" 
-            FROM recetas_del_mundo
-            INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user
-            WHERE recetas_del_mundo.id_receta=?`, id);
+            FROM test
+            INNER JOIN usuarios ON test.id_user = usuarios.id_user
+            WHERE test.id_receta=?`, id);
         // console.log(result);
          // Verificar si hay resultados
          if (result.length === 0) {
@@ -162,7 +162,7 @@ const addReceta = async (req, res) => {
         }
 
         const connection = await getConnection();
-        await connection.query("INSERT INTO recetas_del_mundo SET ?", receta);
+        await connection.query("INSERT INTO test SET ?", receta);
         res.json({ message: "Receta añadida exitosamente" })
     } catch (error) {
         res.status(500);
@@ -174,7 +174,7 @@ const deleteReceta = async (req, res) => {
     try {
         const { id } = req.params;
         const connection = await getConnection();
-        const [result] = await connection.query("DELETE FROM recetas_del_mundo WHERE id_receta = ?;", id);
+        const [result] = await connection.query("DELETE FROM test WHERE id_receta = ?;", id);
 
         if (result.affectedRows > 0) {
             // Elemento borrado exitosamente
@@ -203,7 +203,7 @@ const updateReceta = async (req, res) => {
         }
 
         const connection = await getConnection();
-        const [result] = await connection.query("UPDATE recetas_del_mundo SET ? WHERE id_receta = ?;",[receta,id]);
+        const [result] = await connection.query("UPDATE test SET ? WHERE id_receta = ?;",[receta,id]);
         
         // console.log(result);
         res.json(result);
@@ -228,18 +228,18 @@ const getRecetaCL = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
             `SELECT  
-            recetas_del_mundo.id_receta, 
-            recetas_del_mundo.nombre_receta, 
-            recetas_del_mundo.ingrediente_receta, 
-            recetas_del_mundo.anio, 
-            recetas_del_mundo.pais_receta, 
-            recetas_del_mundo.preparacion_receta, 
-            recetas_del_mundo.fecha_creacion, 
-            recetas_del_mundo.url_imagen_receta, 
+            test.id_receta, 
+            test.nombre_receta, 
+            test.ingrediente_receta, 
+            test.anio, 
+            test.pais_receta, 
+            test.preparacion_receta, 
+            test.fecha_creacion, 
+            test.url_imagen_receta, 
             usuarios.nombres as "creado_por" 
-            FROM recetas_del_mundo
-            INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user
-            WHERE recetas_del_mundo.pais_receta='chile';`);
+            FROM test
+            INNER JOIN usuarios ON test.id_user = usuarios.id_user
+            WHERE test.pais_receta='chile';`);
         // console.log(result);
         // Verificar si hay resultados
         if (result.length === 0) {
@@ -261,18 +261,18 @@ const getRecetaUSA = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
             `SELECT  
-            recetas_del_mundo.id_receta, 
-            recetas_del_mundo.nombre_receta, 
-            recetas_del_mundo.ingrediente_receta, 
-            recetas_del_mundo.anio, 
-            recetas_del_mundo.pais_receta, 
-            recetas_del_mundo.preparacion_receta, 
-            recetas_del_mundo.fecha_creacion, 
-            recetas_del_mundo.url_imagen_receta, 
+            test.id_receta, 
+            test.nombre_receta, 
+            test.ingrediente_receta, 
+            test.anio, 
+            test.pais_receta, 
+            test.preparacion_receta, 
+            test.fecha_creacion, 
+            test.url_imagen_receta, 
             usuarios.nombres as "creado_por" 
-            FROM recetas_del_mundo
-            INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user
-            WHERE recetas_del_mundo.pais_receta = 'Estados Unidos';`);
+            FROM test
+            INNER JOIN usuarios ON test.id_user = usuarios.id_user
+            WHERE test.pais_receta = 'Estados Unidos';`);
         // console.log(result);
         // Verificar si hay resultados
         if (result.length === 0) {
@@ -293,18 +293,18 @@ const getRecetaGB = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
             `SELECT  
-            recetas_del_mundo.id_receta, 
-            recetas_del_mundo.nombre_receta, 
-            recetas_del_mundo.ingrediente_receta, 
-            recetas_del_mundo.anio, 
-            recetas_del_mundo.pais_receta, 
-            recetas_del_mundo.preparacion_receta, 
-            recetas_del_mundo.fecha_creacion, 
-            recetas_del_mundo.url_imagen_receta, 
+            test.id_receta, 
+            test.nombre_receta, 
+            test.ingrediente_receta, 
+            test.anio, 
+            test.pais_receta, 
+            test.preparacion_receta, 
+            test.fecha_creacion, 
+            test.url_imagen_receta, 
             usuarios.nombres as "creado_por" 
-            FROM recetas_del_mundo
-            INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user
-            WHERE recetas_del_mundo.pais_receta='Gran Bretaña';`);
+            FROM test
+            INNER JOIN usuarios ON test.id_user = usuarios.id_user
+            WHERE test.pais_receta='Gran Bretaña';`);
         // console.log(result);
         // Verificar si hay resultados
         if (result.length === 0) {
@@ -325,18 +325,18 @@ const getRecetaCA = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
             `SELECT  
-            recetas_del_mundo.id_receta, 
-            recetas_del_mundo.nombre_receta, 
-            recetas_del_mundo.ingrediente_receta, 
-            recetas_del_mundo.anio, 
-            recetas_del_mundo.pais_receta, 
-            recetas_del_mundo.preparacion_receta, 
-            recetas_del_mundo.fecha_creacion, 
-            recetas_del_mundo.url_imagen_receta, 
+            test.id_receta, 
+            test.nombre_receta, 
+            test.ingrediente_receta, 
+            test.anio, 
+            test.pais_receta, 
+            test.preparacion_receta, 
+            test.fecha_creacion, 
+            test.url_imagen_receta, 
             usuarios.nombres as "creado_por" 
-            FROM recetas_del_mundo
-            INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user
-            WHERE recetas_del_mundo.pais_receta='Canada';`);
+            FROM test
+            INNER JOIN usuarios ON test.id_user = usuarios.id_user
+            WHERE test.pais_receta='Canada';`);
         // console.log(result);
         // Verificar si hay resultados
         if (result.length === 0) {
@@ -357,18 +357,18 @@ const getRecetaES = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
             `SELECT  
-            recetas_del_mundo.id_receta, 
-            recetas_del_mundo.nombre_receta, 
-            recetas_del_mundo.ingrediente_receta, 
-            recetas_del_mundo.anio, 
-            recetas_del_mundo.pais_receta, 
-            recetas_del_mundo.preparacion_receta, 
-            recetas_del_mundo.fecha_creacion, 
-            recetas_del_mundo.url_imagen_receta, 
+            test.id_receta, 
+            test.nombre_receta, 
+            test.ingrediente_receta, 
+            test.anio, 
+            test.pais_receta, 
+            test.preparacion_receta, 
+            test.fecha_creacion, 
+            test.url_imagen_receta, 
             usuarios.nombres as "creado_por" 
-            FROM recetas_del_mundo
-            INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user
-            WHERE recetas_del_mundo.pais_receta='españa';`);
+            FROM test
+            INNER JOIN usuarios ON test.id_user = usuarios.id_user
+            WHERE test.pais_receta='españa';`);
         // console.log(result);
         // Verificar si hay resultados
         if (result.length === 0) {
@@ -389,18 +389,18 @@ const getRecetaMX = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
             `SELECT  
-            recetas_del_mundo.id_receta, 
-            recetas_del_mundo.nombre_receta, 
-            recetas_del_mundo.ingrediente_receta, 
-            recetas_del_mundo.anio, 
-            recetas_del_mundo.pais_receta, 
-            recetas_del_mundo.preparacion_receta, 
-            recetas_del_mundo.fecha_creacion, 
-            recetas_del_mundo.url_imagen_receta, 
+            test.id_receta, 
+            test.nombre_receta, 
+            test.ingrediente_receta, 
+            test.anio, 
+            test.pais_receta, 
+            test.preparacion_receta, 
+            test.fecha_creacion, 
+            test.url_imagen_receta, 
             usuarios.nombres as "creado_por" 
-            FROM recetas_del_mundo
-            INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user
-            WHERE recetas_del_mundo.pais_receta='Mexico';`);
+            FROM test
+            INNER JOIN usuarios ON test.id_user = usuarios.id_user
+            WHERE test.pais_receta='Mexico';`);
         // console.log(result);
         // Verificar si hay resultados
         if (result.length === 0) {
@@ -421,18 +421,18 @@ const getReceta_ARG = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
             `SELECT  
-            recetas_del_mundo.id_receta, 
-            recetas_del_mundo.nombre_receta, 
-            recetas_del_mundo.ingrediente_receta, 
-            recetas_del_mundo.anio, 
-            recetas_del_mundo.pais_receta, 
-            recetas_del_mundo.preparacion_receta, 
-            recetas_del_mundo.fecha_creacion, 
-            recetas_del_mundo.url_imagen_receta, 
+            test.id_receta, 
+            test.nombre_receta, 
+            test.ingrediente_receta, 
+            test.anio, 
+            test.pais_receta, 
+            test.preparacion_receta, 
+            test.fecha_creacion, 
+            test.url_imagen_receta, 
             usuarios.nombres as "creado_por" 
-            FROM recetas_del_mundo
-            INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user
-            WHERE recetas_del_mundo.pais_receta='Argentina';`);
+            FROM test
+            INNER JOIN usuarios ON test.id_user = usuarios.id_user
+            WHERE test.pais_receta='Argentina';`);
         // console.log(result);
         // Verificar si hay resultados
         if (result.length === 0) {
@@ -457,19 +457,19 @@ const getPostres = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
             `SELECT  
-            recetas_del_mundo.id_receta, 
-            recetas_del_mundo.nombre_receta, 
-            recetas_del_mundo.ingrediente_receta, 
-            recetas_del_mundo.anio, 
-            recetas_del_mundo.pais_receta, 
-            recetas_del_mundo.preparacion_receta, 
-            recetas_del_mundo.fecha_creacion, 
-            recetas_del_mundo.url_imagen_receta, 
-            recetas_del_mundo.categoria, 
+            test.id_receta, 
+            test.nombre_receta, 
+            test.ingrediente_receta, 
+            test.anio, 
+            test.pais_receta, 
+            test.preparacion_receta, 
+            test.fecha_creacion, 
+            test.url_imagen_receta, 
+            test.categoria, 
             usuarios.nombres as "creado_por" 
-            FROM recetas_del_mundo
-            INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user
-            WHERE recetas_del_mundo.categoria='postres';`);
+            FROM test
+            INNER JOIN usuarios ON test.id_user = usuarios.id_user
+            WHERE test.categoria='postres';`);
         // console.log(result);
         // Verificar si hay resultados
         if (result.length === 0) {
@@ -491,19 +491,19 @@ const getDesayuno = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
             `SELECT  
-            recetas_del_mundo.id_receta, 
-            recetas_del_mundo.nombre_receta, 
-            recetas_del_mundo.ingrediente_receta, 
-            recetas_del_mundo.anio, 
-            recetas_del_mundo.pais_receta, 
-            recetas_del_mundo.preparacion_receta, 
-            recetas_del_mundo.fecha_creacion, 
-            recetas_del_mundo.url_imagen_receta, 
-            recetas_del_mundo.categoria, 
+            test.id_receta, 
+            test.nombre_receta, 
+            test.ingrediente_receta, 
+            test.anio, 
+            test.pais_receta, 
+            test.preparacion_receta, 
+            test.fecha_creacion, 
+            test.url_imagen_receta, 
+            test.categoria, 
             usuarios.nombres as "creado_por" 
-            FROM recetas_del_mundo
-            INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user
-            WHERE recetas_del_mundo.categoria='desayuno';`);
+            FROM test
+            INNER JOIN usuarios ON test.id_user = usuarios.id_user
+            WHERE test.categoria='desayuno';`);
         // console.log(result);
         // Verificar si hay resultados
         if (result.length === 0) {
