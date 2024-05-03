@@ -1,0 +1,32 @@
+{
+  "name": "api-personalizada",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "babel-node": "babel-node --presets=@babel/preset-env",
+    "dev": "nodemon --exec npm run babel-node src/index.js",
+    "start": "nodemon --exec npx babel-node src/index.js",
+    "build": "babel src -d lib"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/node": "^7.23.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2-promise": "^0.1.4",
+    "npm": "^10.7.0",
+    "promise-mysql": "^5.2.0",
+    "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.0"
+  }
+}
