@@ -6,6 +6,7 @@
   "scripts": {
     "babel-node": "babel-node --presets=@babel/preset-env",
     "dev": "nodemon --exec npm run babel-node src/index.js",
+    "cronjob": "node src/controllers/cron.js",
     "start": "nodemon --exec npx babel-node src/index.js",
     "build": "babel src -d lib"
   },
@@ -14,10 +15,13 @@
   "license": "ISC",
   "dependencies": {
     "@babel/node": "^7.23.9",
+    "axios": "^1.6.8",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "mysql": "^2.18.1",
     "mysql2-promise": "^0.1.4",
+    "node-cron": "^3.0.3",
     "npm": "^10.7.0",
     "promise-mysql": "^5.2.0",
     "sequelize": "^6.37.3"

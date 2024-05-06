@@ -47,7 +47,7 @@ async function scrapeAndSave() {
       }
       console.log('Datos insertados correctamente');
       // Cierra la conexión después de insertar los datos
-      connection.end();
+      // connection.end();
     });
   } catch (error) {
     console.error('Error al obtener datos de la API: ', error);
@@ -56,5 +56,4 @@ async function scrapeAndSave() {
   }
 }
 
-// Ejecutar la función para hacer el scraping y guardar en la base de datos
-scrapeAndSave();
+module.exports = scrapeAndSave
