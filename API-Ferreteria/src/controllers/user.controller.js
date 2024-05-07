@@ -1,8 +1,4 @@
 import { getConnection } from "./../database/database"
-
-// =======================================================================
-//    ===================== GESTIÓN DE USUARIOS ========================
-// =======================================================================
 const getUser = async (req, res) => {
 
     try {
@@ -64,7 +60,7 @@ const addUsuario = async (req, res) => {
         }
         const connection = await getConnection();
         await connection.query("INSERT INTO usuarios SET ?", usuarionuevo);
-        res.json({ message: `Usuario ${user} añadido exitosamente`})
+        res.json({ message: `Usuario ${user} añadido exitosamente` })
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -85,8 +81,8 @@ const updateUsuario = async (req, res) => {
         }
 
         const connection = await getConnection();
-        const [result] = await connection.query("UPDATE usuarios SET ? WHERE id_user = ?;",[usuarioupdate,id]);
-        res.json( { message: `Usuario ${user} Editado exitosamente`})
+        const [result] = await connection.query("UPDATE usuarios SET ? WHERE id_user = ?;", [usuarioupdate, id]);
+        res.json({ message: `Usuario ${user} Editado exitosamente` })
         // console.log(result);
         // res.json(result);
     } catch (error) {
@@ -94,8 +90,6 @@ const updateUsuario = async (req, res) => {
         res.send(error.message);
     }
 };
-
-
 // PARA ELIMINAR ELEMENTOS
 const deleteUsuario = async (req, res) => {
     try {
@@ -115,10 +109,7 @@ const deleteUsuario = async (req, res) => {
         res.status(500).send(error.message);
     }
 };
-
-
 export const usermethods = {
     // gestión usuarios
     getUser, ejemploUserPaginado, addUsuario, updateUsuario, deleteUsuario,
-    
 };
