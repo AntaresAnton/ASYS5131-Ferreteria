@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-import { usermethods as userController } from "../controllers/user.controller";
+import { usermethods as userController } from "../controllers/usuarios.controller";
 // Rutas relacionadas con usuarios
-router.get("/usuario", (req, res) => {
+router.get("/usuarios", (req, res) => {
     userController.getUser(req, res);
 });
 

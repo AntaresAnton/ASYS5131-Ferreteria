@@ -1,15 +1,15 @@
-import { getConnection } from "./../database/database"
+import { getConnection } from "../database/database"
 const getUser = async (req, res) => {
 
     try {
         // console.log(req.params)
         const { id } = req.params;
         const connection = await getConnection();
-        const [result] = await connection.query("SELECT id_user,nombres,user,fecha_creacion FROM usuarios");
+        const [result] = await connection.query("SELECT id,nombre,correo,rol FROM usuarios");
         // console.log(result);
         // Verificar si hay resultados
         if (result.length === 0) {
-            return res.status(404).json({ message: "La receta no se encuentra disponible." });
+            return res.status(404).json({ message: "Usuario no disponible" });
         }
         res.json(result);
     } catch (error) {
@@ -30,7 +30,7 @@ const ejemploUserPaginado = async (req, res) => {
 
         // Consulta SQL con LIMIT y OFFSET para la paginación
         const [result] = await connection.query(
-            `SELECT id_user, nombres, user, fecha_creacion FROM usuarios LIMIT ${itemsPerPage} OFFSET ${offset}`
+            `SELECT id,nombre,correo,rol FROM usuarios LIMIT ${itemsPerPage} OFFSET ${offset}`
         );
 
         // Verificar si hay resultados
@@ -49,14 +49,14 @@ const ejemploUserPaginado = async (req, res) => {
 const addUsuario = async (req, res) => {
 
     try {
-        const { nombres, user, password, fecha_creacion } = req.body;
+        const { nombre,correo,contrasena,rol } = req.body;
         // console.log(banda)
         // console.log(disco)
-        if (nombres == undefined || user == undefined) {
+        if (nombre == undefined || correo == undefined) {
             res.status(400).json({ message: "Bad Request, Por favor, completa los datos." })
         }
         const usuarionuevo = {
-            nombres, user, password, fecha_creacion
+            nombre,correo,contrasena,rol
         }
         const connection = await getConnection();
         await connection.query("INSERT INTO usuarios SET ?", usuarionuevo);
@@ -72,12 +72,12 @@ const updateUsuario = async (req, res) => {
 
     try {
         const { id } = req.params;
-        const { nombres, user, password, } = req.body;
-        if (user === undefined) {
+        const { nombre,correo,contrasena,rol } = req.body;
+        if (nombre === undefined) {
             return res.status(400).json({ message: "Bad Request, Por favor, completar los datos." })
         }
         const usuarioupdate = {
-            nombres, user, password,
+            nombre,correo,contrasena,rol
         }
 
         const connection = await getConnection();

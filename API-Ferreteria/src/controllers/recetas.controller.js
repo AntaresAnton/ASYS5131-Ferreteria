@@ -6,19 +6,13 @@ const getRecetas = async (req, res) => {
     try {
         const connection = await getConnection();
         const [result] = await connection.query(
-        `SELECT  
-        recetas_del_mundo.id_receta, 
-        recetas_del_mundo.nombre_receta, 
-        recetas_del_mundo.ingrediente_receta, 
-        recetas_del_mundo.anio, 
-        recetas_del_mundo.pais_receta, 
-        recetas_del_mundo.preparacion_receta, 
-        recetas_del_mundo.fecha_creacion, 
-        recetas_del_mundo.url_imagen_receta, 
-        recetas_del_mundo.categoria,
-        usuarios.nombres as "creado_por" 
-        FROM recetas_del_mundo
-        INNER JOIN usuarios ON recetas_del_mundo.id_user = usuarios.id_user;`);
+        `SELECT *
+        FROM Usuarios AS u
+        LEFT JOIN Pedidos AS p ON u.id = p.id_usuario
+        LEFT JOIN DetallesPedido AS dp ON p.id = dp.id_pedido
+        LEFT JOIN Productos AS pr ON dp.id_producto = pr.id
+        LEFT JOIN Pagos AS pg ON p.id = pg.id_pedido;
+        `);
         
         // Verificar si hay resultados
         if (result.length === 0) {

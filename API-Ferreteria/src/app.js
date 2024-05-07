@@ -3,6 +3,7 @@
 const LanguageRoutes = require('./routes/recetas.routes');
 const productosRoutes = require('./routes/productos.routes');
 const usuariosRoutes = require('./routes/usuarios.routes');
+const pedidosRoutes = require('./routes/pedidos.routes');
 const express = require('express')
 const morgan = require('morgan')
 // import express from "express";
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use("/", LanguageRoutes)
 app.use("/", productosRoutes)
 app.use("/", usuariosRoutes)
+app.use("/", pedidosRoutes)
 // app.use("/api/usuarios")
 
 module.exports = app;
