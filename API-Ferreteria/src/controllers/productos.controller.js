@@ -9,9 +9,9 @@ const obtenerProducto = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
         `SELECT 
-        PROD.id_producto, 
-        PROD.sku,
-        PROD.nombre_producto,
+        PROD.id, 
+        
+        PROD.nombre,
         PROD.precio, ROUND(PROD.precio / DIVI.valor,2) AS precio_en_dolares,
         DIVI.valor as valor_dolar_dia,
         DIVI.actualizado_el as dolar_actualizado
