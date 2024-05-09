@@ -9,11 +9,14 @@ const obtenerProducto = async (req, res) => {
         const connection = await getConnection();
         const [result] = await connection.query(
         `SELECT 
-        p.*, c.nombre_categoria
-    FROM 
-        Productos p
-    INNER JOIN 
-        Categoria c ON p.id_categoria = c.id;
+        PROD.id_producto, 
+        PROD.sku,
+        PROD.nombre_producto,
+        PROD.precio, ROUND(PROD.precio / DIVI.valor,2) AS precio_en_dolares,
+        DIVI.valor as valor_dolar_dia,
+        DIVI.actualizado_el as dolar_actualizado
+        FROM productos PROD 
+        INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa;
      `);
         
         // Verificar si hay resultados
