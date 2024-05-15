@@ -9,5 +9,5 @@ router.get("/", (req, res) => {
 // router.put('/add-receta', (req, res) => {
 //     res.status(200).send('Receta agregada exitosamente'); // http://localhost:3000/add-receta
 // });
-export default router;
+// export default router;
 module.exports = router

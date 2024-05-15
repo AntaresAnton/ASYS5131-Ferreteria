@@ -1,30 +1,34 @@
-// routes - rutas
-// import LanguageRoutes from "./routes/language.routes"
+// Enrutado para algunas funciones en sus respectivos archivos de rutas
 const LanguageRoutes = require('./routes/recetas.routes');
 const productosRoutes = require('./routes/productos.routes');
 const usuariosRoutes = require('./routes/usuarios.routes');
 const pedidosRoutes = require('./routes/pedidos.routes');
+// Dependencias que deben estar instaladas
 const express = require('express')
 const morgan = require('morgan')
-// import express from "express";
-// import morgan from "morgan";
-const app = express(); //ejecu express
+
+// linkeo a variables, para que la url de swagger sea dinamica
+// const getServerUrl = () => {
+//     const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+//     const host = process.env.HOST || 'localhost';
+//     const port = process.env.PORT || 3000;
+//     return `${protocol}://${host}:${port}`;
+//   };
+
+  // Inicializa Swagger-jsdoc
+// Inicializa
+const router = express(); //ejecuta express
 const cors = require('cors')
 // settings
-app.set("port", 3000);
-// middleware
-app.use(morgan("dev"));
-app.use(cors(
-    { origin: ['http://localhost:3000',] }
+router.set("port", 3000);
+router.use(morgan("dev"));
+router.use(cors(
+    // { origin: [getServerUrl(),] } no descomentar si está en production
 ));
-app.use(express.json());
-
+router.use(express.json());
 // routes
-// app.use("/listado", LanguageRoutes)
-app.use("/", LanguageRoutes)
-app.use("/", productosRoutes)
-app.use("/", usuariosRoutes)
-app.use("/", pedidosRoutes)
-// app.use("/api/usuarios")
-
-module.exports = app;
+router.use("/", LanguageRoutes)
+router.use("/", productosRoutes)
+router.use("/", usuariosRoutes)
+router.use("/", pedidosRoutes)
+module.exports = router
