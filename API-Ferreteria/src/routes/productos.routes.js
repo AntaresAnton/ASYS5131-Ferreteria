@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 import { products as productosController } from "../controllers/productos.controller";
-// Rutas relacionadas con productos
 /**
  * @swagger
  * /productos:
@@ -43,9 +42,34 @@ router.get('/productos', (req, res) => {
     productosController.obtenerProducto(req, res);
 });
 
+/**
+ * @swagger
+ * /productos/{id}:
+ *   get:
+ *     summary: Obtener un producto por ID
+ *     description: Retorna un producto específico basado en su ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID del producto a obtener
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Producto obtenido exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Producto'
+ *       404:
+ *         description: Producto no encontrado
+ */
+
 router.get('/productos/:id', (req, res) => {
     // Lógica para obtener un producto por ID
 });
+
 // Más rutas relacionadas con productos...
 
 module.exports = router;
