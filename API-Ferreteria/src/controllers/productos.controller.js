@@ -33,7 +33,31 @@ const obtenerProducto = async (req, res) => {
 };
 
 
+const crearProducto = async (req, res) => {
+
+    try {
+        const {nombre, descripcion, precio, codigo_divisa, cantidad_disponible, id_categoria} = req.body;
+
+        // if (nombre_receta == undefined || ingrediente_receta == undefined) {
+        //     return res.status(400).json({ message: "Bad Request, Por favor, completa los datos." })
+        // }
+
+        const material = {
+            nombre, descripcion, precio, codigo_divisa, cantidad_disponible, id_categoria
+        }
+
+        const connection = await getConnection();
+        await connection.query("INSERT INTO productos SET ${material}");
+        res.json({ message: "Producto añadido :)" })
+    } catch (error) {
+        res.status(500);
+        res.send(error.message);
+    }
+};
+
+
 export const products = {
-    // GET 
-    obtenerProducto
+   
+    obtenerProducto,
+    crearProducto
 };

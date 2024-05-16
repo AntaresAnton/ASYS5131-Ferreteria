@@ -70,6 +70,11 @@ router.get('/productos/:id', (req, res) => {
     // Lógica para obtener un producto por ID
 });
 
-// Más rutas relacionadas con productos...
+
+router.post('/crear-producto', (req, res) => {
+    // Lógica para crear un nuevo producto
+    productosController.crearProducto(req, res);
+});
+
 
 module.exports = router;
