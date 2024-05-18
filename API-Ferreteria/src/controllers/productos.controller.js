@@ -1,6 +1,8 @@
 // SELECT PROD.id_producto, PROD.nombre_producto, PROD.precio, (PROD.precio * divi.valor) AS precio_en_dolares FROM productos PROD INNER JOIN divisas DIVI ON prod.codigo_divisa = divi.codigo_divisa;
 
 import { getConnection } from "./../database/database"
+const { Producto } = require('../models/models'); // Asegúrate de que la ruta sea correcta
+
 
 // PARA OBTENER LOS RESULTADOS
 const obtenerProducto = async (req, res) => {
@@ -32,8 +34,40 @@ const obtenerProducto = async (req, res) => {
     }
 };
 
+// para borrar productos:
+
+const deleteProducto = async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        // Busca y elimina el producto por su ID
+        const deletedRows = await Producto.destroy({
+            where: {
+                id: id
+            }
+        });
+
+        if (deletedRows > 0) {
+            // Elemento borrado exitosamente
+            res.json({ message: `Elemento con ID ${id} borrado exitosamente.` });
+        } else {
+            // No se encontró ningún elemento con el ID proporcionado
+            res.status(404).json({ message: `No se encontró ningún elemento con el ID ${id}.` });
+        }
+    } catch (error) {
+        // Error en la solicitud
+        res.status(500).send(error.message);
+    }
+};
+
+
 
 export const products = {
     // GET 
-    obtenerProducto
+    obtenerProducto,
+    deleteProducto
 };
+
+
+// INSERT INTO productos (id, nombre, descripcion, precio, codigo_divisa, cantidad_disponible, id_categoria)
+// VALUES (NULL, 'pala', 'nunca hay usao una pala', '29550', 'USD', '210', '3');

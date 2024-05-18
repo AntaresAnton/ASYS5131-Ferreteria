@@ -72,4 +72,6 @@ router.get('/productos/:id', (req, res) => {
 
 // Más rutas relacionadas con productos...
 
+router.delete('/delete-producto/:id', productosController.deleteProducto)
+
 module.exports = router;
