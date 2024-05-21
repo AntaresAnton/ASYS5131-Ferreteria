@@ -22,7 +22,7 @@
     "mysql": "^2.18.1",
     "mysql2-promise": "^0.1.4",
     "node-cron": "^3.0.3",
-    "npm": "^10.7.0",
+    "npm": "^10.8.0",
     "promise-mysql": "^5.2.0",
     "sequelize": "^6.37.3",
     "swagger-jsdoc": "^6.2.8",

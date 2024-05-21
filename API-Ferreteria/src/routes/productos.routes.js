@@ -77,4 +77,6 @@ router.post('/crear-producto', (req, res) => {
 });
 
 
+router.delete('/delete-producto/:id', productosController.deleteProducto)
+
 module.exports = router;
