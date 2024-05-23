@@ -68,8 +68,15 @@ router.get('/productos', (req, res) => {
 
 router.get('/productos/:id', (req, res) => {
     // Lógica para obtener un producto por ID
+    productosController.productoPorID(req,res);
 });
 
-// Más rutas relacionadas con productos...
+
+router.post('/add-producto', (req, res) => {
+    // Lógica para obtener un producto por ID
+    productosController.postProducto(req,res);
+});
+
+
 
 module.exports = router;

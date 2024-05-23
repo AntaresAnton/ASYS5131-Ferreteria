@@ -26,7 +26,7 @@ const sequelize = new Sequelize(claves.database, claves.user, claves.password, {
 });
 
 // Definición del modelo de conexión
-const Connection = sequelize.define('Connection');
+// const Connection = sequelize.define('Connection');
 
 // Función para obtener la conexión
 const getConnection = async () => {
@@ -44,5 +44,5 @@ const getConnection = async () => {
 // Exportar la función de conexión
 module.exports = {
   getConnection,
-  Connection,
+  // Connection,
 };

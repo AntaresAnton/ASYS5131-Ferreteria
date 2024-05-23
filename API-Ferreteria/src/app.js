@@ -19,9 +19,11 @@ const morgan = require('morgan')
 // Inicializa
 const router = express(); //ejecuta express
 const cors = require('cors')
+
 // settings
 router.set("port", 3000);
 router.use(morgan("dev"));
+// router.use(bodyParser.json());
 router.use(cors(
     // { origin: [getServerUrl(),] } no descomentar si está en production
 ));
