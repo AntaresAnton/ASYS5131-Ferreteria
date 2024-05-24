@@ -39,7 +39,7 @@ const productoPorID = async (req, res) => {
         // console.log(req.params)
         const { id } = req.params;
         const sequelize = await getConnection();
-        const result = await sequelize.query(
+        const [result] = await sequelize.query(
             `SELECT 
             PROD.id, 
             PROD.nombre,
@@ -62,10 +62,7 @@ const productoPorID = async (req, res) => {
 };
 
 
-
-
 // INSERT INTO productos ( nombre, descripcion, precio, codigo_divisa, cantidad_disponible, id_categoria) VALUES ('pala', 'nunca hay agarrao una pala', '29990', 'USD', '25', '3');
-
 
 
 export const products = {

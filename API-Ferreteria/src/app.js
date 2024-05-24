@@ -1,8 +1,5 @@
 // Enrutado para algunas funciones en sus respectivos archivos de rutas
-const LanguageRoutes = require('./routes/recetas.routes');
 const productosRoutes = require('./routes/productos.routes');
-const usuariosRoutes = require('./routes/usuarios.routes');
-const pedidosRoutes = require('./routes/pedidos.routes');
 // Dependencias que deben estar instaladas
 const express = require('express')
 const morgan = require('morgan')
@@ -29,8 +26,5 @@ router.use(cors(
 ));
 router.use(express.json());
 // routes
-router.use("/", LanguageRoutes)
 router.use("/", productosRoutes)
-router.use("/", usuariosRoutes)
-router.use("/", pedidosRoutes)
 module.exports = router

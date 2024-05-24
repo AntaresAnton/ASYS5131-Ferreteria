@@ -9,13 +9,13 @@ const options = {
     definition: {
       openapi: '3.0.0',
       info: {
-        title: 'API Ferremas',
+        title: 'API Ferremax',
         version: '1.0.0',
         description: 'API de Ferretería realizada con Swagger y Express',
       },
       servers: [
         {
-          url: 'http://localhost:3000/',
+          url: 'http://localhost:4000/',
         },
       ],
     },

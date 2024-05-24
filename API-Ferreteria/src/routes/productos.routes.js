@@ -6,7 +6,7 @@ import { products as productosController } from "../controllers/productos.contro
  * /productos:
  *   get:
  *     summary: Obtener todos los productos
- *     description: Retorna todos los productos disponibles.
+ *     description: Retosrna todos los productos disponibles.
  *     responses:
  *       200:
  *         description: Lista de productos obtenida exitosamente
@@ -55,6 +55,7 @@ router.get('/productos', (req, res) => {
  *         description: ID del producto a obtener
  *         schema:
  *           type: integer
+ *           format: int32  # Esto aclara que se espera un entero de 32 bits
  *     responses:
  *       200:
  *         description: Producto obtenido exitosamente
@@ -65,6 +66,7 @@ router.get('/productos', (req, res) => {
  *       404:
  *         description: Producto no encontrado
  */
+
 
 router.get('/productos/:id', (req, res) => {
     // Lógica para obtener un producto por ID
