@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 import { products as productosController } from "../controllers/productos.controller";
 /**
@@ -37,9 +37,9 @@ import { products as productosController } from "../controllers/productos.contro
  *                     format: date-time
  *                     description: Fecha y hora de la última actualización del valor del dólar
  */
-router.get('/productos', (req, res) => {
-    // Lógica para obtener todos los productos
-    productosController.obtenerProducto(req, res);
+router.get("/productos", (req, res) => {
+  // Lógica para obtener todos los productos
+  productosController.obtenerProducto(req, res);
 });
 
 /**
@@ -84,10 +84,9 @@ router.get('/productos', (req, res) => {
  *                   example: Error en el servidor
  */
 
-
-router.get('/productos/:id', (req, res) => {
-    // Lógica para obtener un producto por ID
-    productosController.productoPorID(req,res);
+router.get("/productos/:id", (req, res) => {
+  // Lógica para obtener un producto por ID
+  productosController.productoPorID(req, res);
 });
 /**
  * @swagger
@@ -110,7 +109,7 @@ router.get('/productos/:id', (req, res) => {
  *             schema:
  *               type: array
  *               items:
- *                
+ *
  *       404:
  *         description: Producto no encontrado
  *         content:
@@ -132,6 +131,6 @@ router.get('/productos/:id', (req, res) => {
  *                   type: string
  *                   example: Error en el servidor
  */
-router.get('/productos/nombre/:nombre', productosController.productoPorNombre);
+router.get("/productos/nombre/:nombre", productosController.productoPorNombre);
 
 module.exports = router;

@@ -16,15 +16,15 @@
 //     getConnection
 // }
 
-const { Sequelize } = require('sequelize');
-const  claves  = require('./../config');
+const { Sequelize } = require("sequelize");
+const claves = require("./../config");
 // const mysql = require('mysql2/promise');
-const mysql = require('promise-mysql');
+const mysql = require("promise-mysql");
 
 // Configuración de Sequelize
 const sequelize = new Sequelize(claves.database, claves.user, claves.password, {
   host: claves.host,
-  dialect: 'mysql',
+  dialect: "mysql",
 });
 
 // Definición del modelo de conexión
@@ -35,10 +35,10 @@ const getConnection = async () => {
   try {
     // Autenticar la conexión
     await sequelize.authenticate();
-    console.log('Conexión establecida correctamente.');
+    console.log("Conexión establecida correctamente.");
     return sequelize;
   } catch (error) {
-    console.error('No se pudo conectar a la base de datos:', error);
+    console.error("No se pudo conectar a la base de datos:", error);
     throw error;
   }
 };

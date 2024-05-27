@@ -1,29 +1,26 @@
-const axios = require('axios');
-const mysql = require('mysql');
+const axios = require("axios");
+const mysql = require("mysql");
 const claves = require("./../config");
-
-
 
 // Configuración de la conexión a la base de datos MySQL
 const connection = mysql.createConnection({
-    host: claves.host,
-    database: claves.database,
-    user: claves.user,
-    password: claves.password
+  host: claves.host,
+  database: claves.database,
+  user: claves.user,
+  password: claves.password,
 });
-
 
 // Conectar a la base de datos
 connection.connect((err) => {
   if (err) {
-    console.error('Error al conectar a la base de datos: ', err);
+    console.error("Error al conectar a la base de datos: ", err);
     return;
   }
-  console.log('Conexión a la base de datos establecida');
+  console.log("Conexión a la base de datos establecida");
 });
 
 // URL de la API a scrapear
-const apiUrl = 'https://mindicador.cl/api';
+const apiUrl = "https://mindicador.cl/api";
 
 // Función para realizar el scraping y guardar en la base de datos
 async function scrapeAndSave() {
@@ -41,23 +38,23 @@ async function scrapeAndSave() {
     const query = `UPDATE divisas SET valor = ? WHERE divisas.codigo_divisa = 'USD'`;
     const values = [
       [dolarValue],
-    //   ['uf', ufValue]
+      //   ['uf', ufValue]
     ];
 
     connection.query(query, [values], (err, result) => {
       if (err) {
-        console.error('Error al insertar en la base de datos: ', err);
+        console.error("Error al insertar en la base de datos: ", err);
         return;
       }
-      console.log('Datos insertados correctamente');
+      console.log("Datos insertados correctamente");
       // Cierra la conexión después de insertar los datos
       // connection.end();
     });
   } catch (error) {
-    console.error('Error al obtener datos de la API: ', error);
+    console.error("Error al obtener datos de la API: ", error);
     // Cierra la conexión en caso de error
     connection.end();
   }
 }
 
-module.exports = scrapeAndSave
+module.exports = scrapeAndSave;
