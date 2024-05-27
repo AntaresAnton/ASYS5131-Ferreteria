@@ -16,9 +16,11 @@
 //     getConnection
 // }
 
-
 const { Sequelize } = require('sequelize');
 const  claves  = require('./../config');
+// const mysql = require('mysql2/promise');
+const mysql = require('promise-mysql');
+
 // Configuración de Sequelize
 const sequelize = new Sequelize(claves.database, claves.user, claves.password, {
   host: claves.host,
@@ -44,5 +46,6 @@ const getConnection = async () => {
 // Exportar la función de conexión
 module.exports = {
   getConnection,
+  sequelize,
   // Connection,
 };

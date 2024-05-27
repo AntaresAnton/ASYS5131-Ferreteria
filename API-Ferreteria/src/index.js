@@ -3,7 +3,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const app = require('./app'); // Importa tu aplicación Express desde app.js
-
+const bodyParser = require('body-parser');
 // Define las opciones de Swagger
 const options = {
     definition: {
@@ -24,7 +24,7 @@ const options = {
 
 // Inicializa Swagger-jsdoc
 const swaggerSpec = swaggerJSDoc(options);
-
+app.use(bodyParser.json());
 // Middleware para servir la documentación generada por Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
