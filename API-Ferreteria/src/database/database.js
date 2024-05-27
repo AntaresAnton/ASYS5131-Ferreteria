@@ -1,5 +1,5 @@
 // import mysql from "promise-mysql";
-// import { claves } from "./../config";
+// const claves  = require('./../config');
 
 // const connection = mysql.createConnection({
 //     host: claves.host,
@@ -8,7 +8,7 @@
 //     password: claves.password
 // });
 
-// const getConnection = () => {
+// const getConnection = async () => {
 //     return connection;
 // }
 
@@ -18,7 +18,7 @@
 
 
 const { Sequelize } = require('sequelize');
-const { claves } = require('./../config');
+const  claves  = require('./../config');
 // Configuración de Sequelize
 const sequelize = new Sequelize(claves.database, claves.user, claves.password, {
   host: claves.host,

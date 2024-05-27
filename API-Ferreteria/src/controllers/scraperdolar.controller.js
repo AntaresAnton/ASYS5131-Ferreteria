@@ -1,6 +1,8 @@
 const axios = require('axios');
 const mysql = require('mysql');
-import { claves } from "./../config";
+const claves = require("./../config");
+
+
 
 // Configuración de la conexión a la base de datos MySQL
 const connection = mysql.createConnection({

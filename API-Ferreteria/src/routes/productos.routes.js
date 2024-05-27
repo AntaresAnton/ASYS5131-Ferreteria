@@ -62,9 +62,26 @@ router.get('/productos', (req, res) => {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Producto'
  *       404:
  *         description: Producto no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: El producto no se encuentra disponible.
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Error en el servidor
  */
 
 
@@ -72,6 +89,51 @@ router.get('/productos/:id', (req, res) => {
     // Lógica para obtener un producto por ID
     productosController.productoPorID(req,res);
 });
+/**
+ * @swagger
+ * /productos/nombre/{nombre}:
+ *   get:
+ *     summary: Obtener un producto por nombre
+ *     description: Retorna un producto específico basado en su nombre.
+ *     parameters:
+ *       - in: path
+ *         name: nombre
+ *         required: true
+ *         description: Nombre del producto a obtener
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Producto obtenido exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                
+ *       404:
+ *         description: Producto no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: El producto no se encuentra disponible.
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Error en el servidor
+ */
+router.get('/productos/nombre/:nombre', productosController.productoPorNombre);
+
 
 
 router.post('/add-producto', (req, res) => {

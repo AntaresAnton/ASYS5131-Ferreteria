@@ -8,21 +8,22 @@ const obtenerProducto = async (req, res) => {
 
     try {
         const sequelize = await getConnection();
-        const [result] = await sequelize.query(
+        const [result, metadata] = await sequelize.query(
         `SELECT 
         PROD.id, 
         PROD.nombre,
+        PROD.descripcion,
         PROD.precio, ROUND(PROD.precio / DIVI.valor,2) AS precio_en_dolares,
         DIVI.valor as valor_dolar_dia,
         DIVI.actualizado_el as dolar_actualizado
         FROM productos PROD 
         INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa;
      `);
-        
-        // Verificar si hay resultados
-        if (result.length === 0) {
-            console.log("No hay productos disponibles.");
-            return res.status(404).json({ message: "No hay productos disponibles." });
+     
+     // Verificar si hay resultados
+     if (result.length === 0) {
+         console.log("No hay productos disponibles.");
+         return res.status(404).json({ message: "No hay productos disponibles." });
         }
         // console.log(result);
         res.json(result);
@@ -39,15 +40,17 @@ const productoPorID = async (req, res) => {
         // console.log(req.params)
         const { id } = req.params;
         const sequelize = await getConnection();
-        const [result] = await sequelize.query(
+        const [result, metadata] = await sequelize.query(
             `SELECT 
             PROD.id, 
             PROD.nombre,
+            CAT.nombre_categoria as categoria,
             PROD.precio, ROUND(PROD.precio / DIVI.valor,2) AS precio_en_dolares,
             DIVI.valor as valor_dolar_dia,
             DIVI.actualizado_el as dolar_actualizado
             FROM productos PROD 
             INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa
+            INNER JOIN categoria CAT on PROD.id_categoria = CAT.id
             WHERE PROD.id=${id}`);
         // console.log(result);
          // Verificar si hay resultados
@@ -61,6 +64,39 @@ const productoPorID = async (req, res) => {
     }
 };
 
+const productoPorNombre = async (req, res) => {
+    try {
+        const { nombre } = req.params;
+        const sequelize = await getConnection();
+        const [results, metadata] = await sequelize.query(
+            `SELECT 
+                PROD.id, 
+                PROD.nombre,
+                CAT.nombre_categoria as categoria,
+                PROD.precio, 
+                ROUND(PROD.precio / DIVI.valor, 2) AS precio_en_dolares,
+                DIVI.valor as valor_dolar_dia,
+                DIVI.actualizado_el as dolar_actualizado
+            FROM productos PROD 
+            INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa 
+            INNER JOIN categoria CAT on PROD.id_categoria = CAT.id 
+            WHERE PROD.nombre = :nombre`,
+            {
+                replacements: { nombre },
+                type: sequelize.QueryTypes.SELECT
+            }
+        );
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: "El producto no se encuentra disponible." });
+        }
+        res.json(results);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 
 // INSERT INTO productos ( nombre, descripcion, precio, codigo_divisa, cantidad_disponible, id_categoria) VALUES ('pala', 'nunca hay agarrao una pala', '29990', 'USD', '25', '3');
 
@@ -69,4 +105,5 @@ export const products = {
     // GET 
     obtenerProducto,
     productoPorID,
+    productoPorNombre,
 };
