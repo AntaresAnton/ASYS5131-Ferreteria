@@ -9,13 +9,13 @@ const options = {
     definition: {
       openapi: '3.0.0',
       info: {
-        title: 'API Ferremas',
+        title: 'API Ferremax',
         version: '1.0.0',
         description: 'API de Ferretería realizada con Swagger y Express',
       },
       servers: [
         {
-          url: 'http://localhost:3000/',
+          url: 'http://localhost:4000/',
         },
       ],
     },
@@ -29,7 +29,7 @@ const swaggerSpec = swaggerJSDoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Puerto de escucha
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

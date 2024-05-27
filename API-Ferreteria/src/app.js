@@ -1,8 +1,5 @@
 // Enrutado para algunas funciones en sus respectivos archivos de rutas
-const LanguageRoutes = require('./routes/recetas.routes');
 const productosRoutes = require('./routes/productos.routes');
-const usuariosRoutes = require('./routes/usuarios.routes');
-const pedidosRoutes = require('./routes/pedidos.routes');
 // Dependencias que deben estar instaladas
 const express = require('express')
 const morgan = require('morgan')
@@ -19,16 +16,15 @@ const morgan = require('morgan')
 // Inicializa
 const router = express(); //ejecuta express
 const cors = require('cors')
+
 // settings
 router.set("port", 3000);
 router.use(morgan("dev"));
+// router.use(bodyParser.json());
 router.use(cors(
     // { origin: [getServerUrl(),] } no descomentar si está en production
 ));
 router.use(express.json());
 // routes
-router.use("/", LanguageRoutes)
 router.use("/", productosRoutes)
-router.use("/", usuariosRoutes)
-router.use("/", pedidosRoutes)
 module.exports = router

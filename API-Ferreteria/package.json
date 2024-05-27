@@ -16,10 +16,12 @@
   "dependencies": {
     "@babel/node": "^7.23.9",
     "axios": "^1.6.8",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mysql": "^2.18.1",
+    "mysql2": "^3.9.7",
     "mysql2-promise": "^0.1.4",
     "node-cron": "^3.0.3",
     "npm": "^10.8.0",

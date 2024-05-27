@@ -6,7 +6,7 @@ import { products as productosController } from "../controllers/productos.contro
  * /productos:
  *   get:
  *     summary: Obtener todos los productos
- *     description: Retorna todos los productos disponibles.
+ *     description: Retosrna todos los productos disponibles.
  *     responses:
  *       200:
  *         description: Lista de productos obtenida exitosamente
@@ -55,28 +55,92 @@ router.get('/productos', (req, res) => {
  *         description: ID del producto a obtener
  *         schema:
  *           type: integer
+ *           format: int32  # Esto aclara que se espera un entero de 32 bits
  *     responses:
  *       200:
  *         description: Producto obtenido exitosamente
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Producto'
  *       404:
  *         description: Producto no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: El producto no se encuentra disponible.
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Error en el servidor
  */
+
 
 router.get('/productos/:id', (req, res) => {
     // Lógica para obtener un producto por ID
+    productosController.productoPorID(req,res);
+});
+/**
+ * @swagger
+ * /productos/nombre/{nombre}:
+ *   get:
+ *     summary: Obtener un producto por nombre
+ *     description: Retorna un producto específico basado en su nombre.
+ *     parameters:
+ *       - in: path
+ *         name: nombre
+ *         required: true
+ *         description: Nombre del producto a obtener
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Producto obtenido exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                
+ *       404:
+ *         description: Producto no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: El producto no se encuentra disponible.
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Error en el servidor
+ */
+router.get('/productos/nombre/:nombre', productosController.productoPorNombre);
+
+
+
+router.post('/add-producto', (req, res) => {
+    // Lógica para obtener un producto por ID
+    productosController.postProducto(req,res);
 });
 
 
-router.post('/crear-producto', (req, res) => {
-    // Lógica para crear un nuevo producto
-    productosController.crearProducto(req, res);
-});
-
-
-router.delete('/delete-producto/:id', productosController.deleteProducto)
 
 module.exports = router;

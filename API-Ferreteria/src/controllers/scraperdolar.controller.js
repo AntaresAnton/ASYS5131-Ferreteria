@@ -1,13 +1,17 @@
 const axios = require('axios');
 const mysql = require('mysql');
+const claves = require("./../config");
+
+
 
 // Configuración de la conexión a la base de datos MySQL
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'ferremas'
+    host: claves.host,
+    database: claves.database,
+    user: claves.user,
+    password: claves.password
 });
+
 
 // Conectar a la base de datos
 connection.connect((err) => {
