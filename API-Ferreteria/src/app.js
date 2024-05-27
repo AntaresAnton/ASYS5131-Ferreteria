@@ -16,8 +16,6 @@ const morgan = require("morgan");
 // Inicializa
 const router = express(); //ejecuta express
 const cors = require("cors");
-const bodyParser = require("body-parser");
-// const routes = require('./routes');
 
 // settings
 router.set("port", 3000);
@@ -29,6 +27,8 @@ router.use(
 );
 // router.use(bodyParser.json());
 router.use(express.json());
+router.use(express.static('public')); // Asegúrate de tener una carpeta 'public' en tu proyecto
+
 // routes
 router.use("/", productosRoutes);
 module.exports = router;
