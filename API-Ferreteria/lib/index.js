@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(_swagger["default"]));
 
 // Puerto de escucha
-var PORT = process.env.PORT || 4000;
+var PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {
   console.log("Servidor corriendo en el puerto ".concat(PORT));
 });
