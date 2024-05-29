@@ -12,5 +12,6 @@ router.get("/productos/:id", (req, res) => {
 });
 router.get("/productos/nombre/:nombre", productosController.productoPorNombre);
 
+router.get("/divisas", productosController.getDivisas)
 
 module.exports = router;
