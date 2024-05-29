@@ -30,7 +30,7 @@ var obtenerProducto = /*#__PURE__*/function () {
         case 3:
           _sequelize = _context.sent;
           _context.next = 6;
-          return _sequelize.query("SELECT \n        PROD.id, \n        PROD.nombre,\n        PROD.descripcion,\n        PROD.precio, ROUND(PROD.precio / DIVI.valor,2) AS precio_en_dolares,\n        DIVI.valor as valor_dolar_dia,\n        DIVI.actualizado_el as dolar_actualizado\n        FROM productos PROD \n        INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa;\n     ");
+          return _sequelize.query("SELECT \n        PROD.id, \n        PROD.sku,\n        PROD.nombre,\n        PROD.descripcion,\n        PROD.marca,\n        PROD.precio, ROUND(PROD.precio / DIVI.valor,2) AS precio_en_dolares,\n        PROD.cantidad_disponible AS stock_disponible,\n        DIVI.valor as valor_dolar_dia,\n        DATE_FORMAT(DIVI.actualizado_el, '%d-%m-%Y - %H:%i') as fecha_actualizacion_dolar\n        FROM productos PROD \n        INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa;\n     ");
         case 6:
           _yield$_sequelize$que = _context.sent;
           _yield$_sequelize$que2 = _slicedToArray(_yield$_sequelize$que, 2);
@@ -80,7 +80,7 @@ var productoPorID = /*#__PURE__*/function () {
         case 4:
           _sequelize2 = _context2.sent;
           _context2.next = 7;
-          return _sequelize2.query("SELECT \n            PROD.id, \n            PROD.nombre,\n            CAT.nombre_categoria as categoria,\n            PROD.precio, ROUND(PROD.precio / DIVI.valor,2) AS precio_en_dolares,\n            DIVI.valor as valor_dolar_dia,\n            DIVI.actualizado_el as dolar_actualizado\n            FROM productos PROD \n            INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa\n            INNER JOIN categoria CAT on PROD.id_categoria = CAT.id\n            WHERE PROD.id=".concat(id));
+          return _sequelize2.query("\n            SELECT \n            PROD.id, \n            PROD.sku,\n            PROD.nombre,\n            PROD.descripcion,\n            CAT.nombre_categoria as categoria,\n            PROD.marca,\n            PROD.precio, ROUND(PROD.precio / DIVI.valor,2) AS precio_en_dolares,\n            PROD.cantidad_disponible AS stock_disponible,\n            DIVI.valor as valor_dolar_dia,\n            DATE_FORMAT(DIVI.actualizado_el, '%d-%m-%Y - %H:%i') as fecha_actualizacion_dolar\n            FROM productos PROD \n            INNER JOIN categoria CAT on PROD.id_categoria = CAT.id\n            INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa\n            WHERE PROD.id=".concat(id));
         case 7:
           _yield$_sequelize2$qu = _context2.sent;
           _yield$_sequelize2$qu2 = _slicedToArray(_yield$_sequelize2$qu, 2);
@@ -163,6 +163,57 @@ var productoPorNombre = /*#__PURE__*/function () {
     return _ref3.apply(this, arguments);
   };
 }();
+var getDivisas = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res) {
+    var nombre, _sequelize4, _yield$_sequelize4$qu, _yield$_sequelize4$qu2, results, metadata;
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
+        case 0:
+          _context4.prev = 0;
+          nombre = req.params.nombre;
+          _context4.next = 4;
+          return (0, _database.getConnection)();
+        case 4:
+          _sequelize4 = _context4.sent;
+          _context4.next = 7;
+          return _sequelize4.query("\n      SELECT\n      codigo_divisa,\n      nombre_divisa,\n      valor,\n      DATE_FORMAT(actualizado_el, '%d-%m-%Y - %H:%i') as 'Fecha Actualizaci\xF3n'\n      FROM divisas\n      ", {
+            replacements: {
+              nombre: nombre
+            },
+            type: _sequelize4.QueryTypes.SELECT
+          });
+        case 7:
+          _yield$_sequelize4$qu = _context4.sent;
+          _yield$_sequelize4$qu2 = _slicedToArray(_yield$_sequelize4$qu, 2);
+          results = _yield$_sequelize4$qu2[0];
+          metadata = _yield$_sequelize4$qu2[1];
+          if (!(results.length === 0)) {
+            _context4.next = 13;
+            break;
+          }
+          return _context4.abrupt("return", res.status(404).json({
+            message: "Bad Request, url inválida"
+          }));
+        case 13:
+          res.json(results);
+          _context4.next = 19;
+          break;
+        case 16:
+          _context4.prev = 16;
+          _context4.t0 = _context4["catch"](0);
+          res.status(500).json({
+            message: _context4.t0.message
+          });
+        case 19:
+        case "end":
+          return _context4.stop();
+      }
+    }, _callee4, null, [[0, 16]]);
+  }));
+  return function getDivisas(_x7, _x8) {
+    return _ref4.apply(this, arguments);
+  };
+}();
 
 // INSERT INTO productos ( nombre, descripcion, precio, codigo_divisa, cantidad_disponible, id_categoria) VALUES ('pala', 'nunca hay agarrao una pala', '29990', 'USD', '25', '3');
 
@@ -170,5 +221,6 @@ var products = exports.products = {
   // GET
   obtenerProducto: obtenerProducto,
   productoPorID: productoPorID,
-  productoPorNombre: productoPorNombre
+  productoPorNombre: productoPorNombre,
+  getDivisas: getDivisas
 };

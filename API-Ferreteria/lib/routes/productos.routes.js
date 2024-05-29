@@ -12,4 +12,5 @@ router.get("/productos/:id", function (req, res) {
   _productos.products.productoPorID(req, res);
 });
 router.get("/productos/nombre/:nombre", _productos.products.productoPorNombre);
+router.get("/divisas", _productos.products.getDivisas);
 module.exports = router;
