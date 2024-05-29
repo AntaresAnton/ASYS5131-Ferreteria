@@ -1,11 +1,13 @@
 "use strict";
 
+var _swagger = _interopRequireDefault(require("./swagger/swagger.json"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // Enrutado para algunas funciones en sus respectivos archivos de rutas
 var productosRoutes = require("./routes/productos.routes");
 // Dependencias que deben estar instaladas
 var express = require("express");
 var morgan = require("morgan");
-
+var swaggerUi = require("swagger-ui-express");
 // linkeo a variables, para que la url de swagger sea dinamica
 // const getServerUrl = () => {
 //     const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
@@ -29,7 +31,12 @@ router.use(cors()
 // router.use(bodyParser.json());
 router.use(express.json());
 router.use(express["static"]('public')); // Asegúrate de tener una carpeta 'public' en tu proyecto
-
-// routes
 router.use("/", productosRoutes);
+// routes
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(_swagger["default"]));
+
+// Ruta para manejar todas las demás solicitudes no definidas - siempre dejar de los ultimos
+router.use(function (req, res, next) {
+  res.status(404).send('Revisar /api-docs para mayor información');
+});
 module.exports = router;

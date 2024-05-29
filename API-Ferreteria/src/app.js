@@ -3,6 +3,8 @@ const productosRoutes = require("./routes/productos.routes");
 // Dependencias que deben estar instaladas
 const express = require("express");
 const morgan = require("morgan");
+const swaggerUi = require("swagger-ui-express");
+import swaggerDocument from './swagger/swagger.json';
 
 // linkeo a variables, para que la url de swagger sea dinamica
 // const getServerUrl = () => {
@@ -28,7 +30,12 @@ router.use(
 // router.use(bodyParser.json());
 router.use(express.json());
 router.use(express.static('public')); // Asegúrate de tener una carpeta 'public' en tu proyecto
-
-// routes
 router.use("/", productosRoutes);
+// routes
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// Ruta para manejar todas las demás solicitudes no definidas - siempre dejar de los ultimos
+router.use((req, res, next) => {
+  res.status(404).send('Revisar /api-docs para mayor información');
+});
 module.exports = router;
