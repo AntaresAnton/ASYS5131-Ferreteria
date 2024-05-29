@@ -8,6 +8,8 @@ var productosRoutes = require("./routes/productos.routes");
 var express = require("express");
 var morgan = require("morgan");
 var swaggerUi = require("swagger-ui-express");
+var transbankRoutes = require('./routes/transbank.routes');
+
 // linkeo a variables, para que la url de swagger sea dinamica
 // const getServerUrl = () => {
 //     const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
@@ -32,6 +34,7 @@ router.use(cors()
 router.use(express.json());
 router.use(express["static"]('public')); // Asegúrate de tener una carpeta 'public' en tu proyecto
 router.use("/", productosRoutes);
+router.use('/transbank', transbankRoutes);
 // routes
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(_swagger["default"]));
 

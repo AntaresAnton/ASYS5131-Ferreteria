@@ -18,7 +18,9 @@ var _require = require("express"),
   Router = _require.Router;
 var _require2 = require("../utils/error"),
   httpError = _require2.httpError;
+// const { Options, Environment, IntegrationApiKeys, IntegrationCommerceCodes, TransactionNonInsertedCodes } = require("transbank-sdk");
 // Importamos el SDK de Transbank
+
 var WebpayPlus = require("transbank-sdk").WebpayPlus;
 var _require3 = require("transbank-sdk"),
   Options = _require3.Options,

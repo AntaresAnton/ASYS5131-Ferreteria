@@ -5,6 +5,7 @@ const express = require("express");
 const morgan = require("morgan");
 const swaggerUi = require("swagger-ui-express");
 import swaggerDocument from './swagger/swagger.json';
+const transbankRoutes = require('./routes/transbank.routes');
 
 // linkeo a variables, para que la url de swagger sea dinamica
 // const getServerUrl = () => {
@@ -31,6 +32,7 @@ router.use(
 router.use(express.json());
 router.use(express.static('public')); // Asegúrate de tener una carpeta 'public' en tu proyecto
 router.use("/", productosRoutes);
+router.use('/transbank', transbankRoutes);
 // routes
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

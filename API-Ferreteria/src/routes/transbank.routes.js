@@ -10,7 +10,9 @@
 // Obtenemos el método Router de express
 const { Router } = require("express");
 const { httpError } = require("../utils/error");
+// const { Options, Environment, IntegrationApiKeys, IntegrationCommerceCodes, TransactionNonInsertedCodes } = require("transbank-sdk");
 // Importamos el SDK de Transbank
+
 const WebpayPlus = require("transbank-sdk").WebpayPlus;
 const {
   Options,
