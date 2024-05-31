@@ -1,27 +1,13 @@
-/**
- * @swagger
- * /api/users:
- *   get:
- *     summary: Get all users
- *     responses:
- *       200:
- *         description: Successful response
- */
-// Obtenemos el método Router de express
 const { Router } = require("express");
 const { httpError } = require("../utils/error");
-// const { Options, Environment, IntegrationApiKeys, IntegrationCommerceCodes, TransactionNonInsertedCodes } = require("transbank-sdk");
-// Importamos el SDK de Transbank
-
 const WebpayPlus = require("transbank-sdk").WebpayPlus;
 const {
   Options,
   IntegrationApiKeys,
   Environment,
   IntegrationCommerceCodes,
-  TransactionNonInsertedCodes,
 } = require("transbank-sdk");
-// Configura las opciones de Transbank
+
 const tx = new WebpayPlus.Transaction(
   new Options(
     IntegrationCommerceCodes.WEBPAY_PLUS,
@@ -29,17 +15,14 @@ const tx = new WebpayPlus.Transaction(
     Environment.Integration
   )
 );
-// Instancia de nuestra Router de Express
+
 const router = Router();
 
 // Ruta para iniciar el pago transaction
 router.post("/credit", async (req, res) => {
   try {
     const { buyOrder, sessionId, amount, returnUrl } = req.body;
-    // Crea la transacción con los valores recibidos
     const response = await tx.create(buyOrder, sessionId, amount, returnUrl);
-    // Redirige al usuario al formulario de pago de Transbank
-    //res.redirect(response.url);
     res.json({
       ok: true,
       url: response.url,
@@ -51,35 +34,36 @@ router.post("/credit", async (req, res) => {
   }
 });
 
-// chequea es estdo de la transacción en  Transbank
+// Chequea el estado de la transacción en Transbank
 router.get("/checkPayment", async (req, res) => {
   try {
-    const { token } = req.body;
+    const { token } = req.query;
     const response = await tx.status(token);
-    // Aquí puedes manejar la respuesta de Transbank
     res.json({
       data: response,
     });
   } catch (e) {
     console.error(e);
-    httpError(res, "Error al validar el estado del pago");
+    httpError(res, "Error al validar el estado del pago", e);
   }
 });
 
 // Ruta para recibir la respuesta de Transbank
 router.get("/endPayment", async (req, res) => {
   try {
-    const { token } = req.body;
-    const response = await tx.commit(token);
-    // Aquí puedes manejar la respuesta de Transbank
-    console.log("ERROR!!! ", response);
+    const { token_ws } = req.query; // Usa req.query en lugar de req.body para obtener el token
+    if (!token_ws) {
+      throw new Error("Token no proporcionado");
+    }
+    const response = await tx.commit(token_ws);
     res.json({
+      ok: true,
       data: response,
     });
   } catch (e) {
     console.error(e);
-    httpError(res, "Error al confirmar pago");
+    httpError(res, "Error al confirmar pago", e);
   }
 });
-// Exporta nuestra ruta para nuestro index.js
+
 module.exports = router;

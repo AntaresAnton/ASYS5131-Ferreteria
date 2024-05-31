@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostrar Datos de Transbank</title>
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        .data-item {
+            margin-bottom: 10px;
+        }
+        .data-label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detalles del Pago</h1>
+        <div class="data-item">
+            <span class="data-label">VCI:</span>
+            <span id="vci"></span>
+        </div>
+        <div class="data-item">
+            <span class="data-label">Monto:</span>
+            <span id="amount"></span>
+        </div>
+        <div class="data-item">
+            <span class="data-label">Estado:</span>
+            <span id="status"></span>
+        </div>
+        <div class="data-item">
+            <span class="data-label">Orden de Compra:</span>
+            <span id="buy_order"></span>
+        </div>
+        <div class="data-item">
+            <span class="data-label">Fecha de Transacción:</span>
+            <span id="transaction_date"></span>
+        </div>
+        <div class="data-item">
+            <span class="data-label">Código de Autorización:</span>
+            <span id="authorization_code"></span>
+        </div>
+        <div class="data-item">
+            <span class="data-label">Número de Tarjeta:</span>
+            <span id="card_number"></span>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript para obtener y mostrar los datos
+        window.onload = function() {
+            fetch('http://localhost:3000/transbank/endPayment/?token_ws=01abdfdbaed811988d8663f431de2046ed31678ebbd87bc6d8a5b4fc3d4cd126')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('vci').innerText = data.data.vci;
+                document.getElementById('amount').innerText = data.data.amount;
+                document.getElementById('status').innerText = data.data.status;
+                document.getElementById('buy_order').innerText = data.data.buy_order;
+                document.getElementById('transaction_date').innerText = data.data.transaction_date;
+                document.getElementById('authorization_code').innerText = data.data.authorization_code;
+                document.getElementById('card_number').innerText = data.data.card_detail.card_number;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

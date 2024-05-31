@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Pago</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilos personalizados */
+        body {
+            background-color: #f8f9fa; /* Color de fondo */
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            background-color: #ffffff; /* Fondo del formulario */
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+            padding: 30px;
+            margin: auto;
+        }
+
+        .form-label {
+            color: #495057; /* Color del texto de las etiquetas */
+            font-weight: bold;
+        }
+
+        .btn-pagar {
+            background-color: #007bff; /* Color de fondo del botón */
+            border-color: #007bff; /* Color del borde del botón */
+            color: #ffffff; /* Color del texto del botón */
+            font-weight: bold;
+        }
+
+        .btn-pagar:hover {
+            background-color: #0056b3; /* Color de fondo del botón al pasar el mouse */
+            border-color: #0056b3; /* Color del borde del botón al pasar el mouse */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <form id="paymentForm" method="post" action="https://webpay3gint.transbank.cl/webpayserver/initTransaction">
+            <div class="mb-3">
+                <h3>FERREMAX</h3>
+                <label for="token" class="form-label">Ingrese el Token de transbank para realizar el pago:</label>
+                <input type="text" id="token" name="token_ws" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-pagar">Ir a pagar</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS (opcional si no necesitas funcionalidades de JavaScript) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', function(event) {
+            const tokenInput = document.getElementById('token');
+            if (!tokenInput.value) {
+                event.preventDefault(); // Previene el envío del formulario si el token no está presente
+                alert('Por favor, ingrese un token.');
+            }
+        });
+    </script>
+</body>
+</html>
