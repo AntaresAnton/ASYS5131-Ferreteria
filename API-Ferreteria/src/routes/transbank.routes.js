@@ -1,12 +1,7 @@
 const { Router } = require("express");
 const { httpError } = require("../utils/error");
 const WebpayPlus = require("transbank-sdk").WebpayPlus;
-const {
-  Options,
-  IntegrationApiKeys,
-  Environment,
-  IntegrationCommerceCodes,
-} = require("transbank-sdk");
+const { Options, IntegrationApiKeys, Environment, IntegrationCommerceCodes} = require("transbank-sdk");
 
 const tx = new WebpayPlus.Transaction(
   new Options(
