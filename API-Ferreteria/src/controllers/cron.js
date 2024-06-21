@@ -29,7 +29,7 @@ process.on('SIGINT', gracefulShutdown);
 
 function gracefulShutdown() {
   isShuttingDown = true;
-  console.log('Iniciando cierre graceful...');
+  console.log('Cerrando...');
   // Dar tiempo para que las operaciones en curso terminen
   setTimeout(() => {
     console.log('Cierre completado');
