@@ -1,60 +1,58 @@
-const axios = require("axios");
-const mysql = require("mysql");
-const claves = require("./../config");
+/**
+ * Módulo de Conexión a la Base de Datos
+ * 
+ * Este módulo establece una conexión a una base de datos MySQL utilizando la configuración
+ * proporcionada en el objeto 'claves'. Utiliza un enfoque basado en promesas para un mejor
+ * manejo asíncrono e incluye una gestión adecuada de errores y cierre de conexión.
+ * 
+ * El módulo exporta una función asíncrona que puede ser utilizada para obtener una conexión
+ * a la base de datos. Está diseñado para ser más robusto y mantenible, con un manejo de
+ * errores mejorado y capacidades de registro mejoradas.
+ */
 
-// Configuración de la conexión a la base de datos MySQL
-const connection = mysql.createConnection({
+const mysql = require("mysql2/promise");
+const claves = require("./../config");
+const winston = require('winston');
+
+// Configurar el logger Winston
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.simple(),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' })
+  ]
+});
+
+// Configuración de la conexión a la base de datos
+const dbConfig = {
   host: claves.host,
   database: claves.database,
   user: claves.user,
   password: claves.password,
-});
+};
 
-// Conectar a la base de datos
-connection.connect((err) => {
-  if (err) {
-    console.error("Error al conectar a la base de datos: ", err);
-    return;
-  }
-  console.log("Conexión a la base de datos establecida");
-});
-
-// URL de la API a scrapear
-const apiUrl = "https://mindicador.cl/api";
-
-// Función para realizar el scraping y guardar en la base de datos
-async function scrapeAndSave() {
+// Función asíncrona para obtener la conexión a la base de datos
+async function obtenerConexion() {
   try {
-    const response = await axios.get(apiUrl);
-    const data = response.data;
-
-    // Aquí puedes procesar los datos de la API y guardarlos en la base de datos
-    // En este ejemplo, vamos a guardar el valor del dólar y la UF
-
-    const dolarValue = data.dolar.valor;
-    // const ufValue = data.uf.valor;
-
-    // Insertar los valores en la base de datos
-    const query = `UPDATE divisas SET valor = ? WHERE divisas.codigo_divisa = 'USD'`;
-    const values = [
-      [dolarValue],
-      //   ['uf', ufValue]
-    ];
-
-    connection.query(query, [values], (err, result) => {
-      if (err) {
-        console.error("Error al insertar en la base de datos: ", err);
-        return;
-      }
-      console.log("Datos insertados correctamente");
-      // Cierra la conexión después de insertar los datos
-      // connection.end();
-    });
-  } catch (error) {
-    console.error("Error al obtener datos de la API: ", error);
-    // Cierra la conexión en caso de error
-    connection.end();
+    const conexion = await mysql.createConnection(dbConfig);
+    logger.info("Conexión a la base de datos establecida");
+    return conexion;
+  } catch (err) {
+    logger.error("Error al conectar a la base de datos:", err);
+    throw err; // Re-lanzar el error para manejo de errores de nivel superior
   }
 }
 
-module.exports = scrapeAndSave;
+// Función para cerrar la conexión a la base de datos
+async function cerrarConexion(conexion) {
+  try {
+    await conexion.end();
+    logger.info("Conexión a la base de datos cerrada");
+  } catch (err) {
+    logger.error("Error al cerrar la conexión a la base de datos:", err);
+  }
+}
+
+module.exports = { obtenerConexion, cerrarConexion };

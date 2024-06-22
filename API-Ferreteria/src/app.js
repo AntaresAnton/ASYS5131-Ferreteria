@@ -1,43 +1,46 @@
-// Enrutado para algunas funciones en sus respectivos archivos de rutas
+/**
+ * Archivo Principal de la API-Ferretería
+ *
+ * Este archivo configura la aplicación Express para el proyecto API-Ferretería.
+ * Establece middleware, rutas y documentación Swagger.
+ * La API maneja la gestión de productos y la integración con Transbank para una ferretería.
+ */
+
+// Importaciones de rutas
 const productosRoutes = require("./routes/productos.routes");
-// Dependencias que deben estar instaladas
+const transbankRoutes = require("./routes/transbank.routes");
+
+// Importaciones de dependencias
 const express = require("express");
 const morgan = require("morgan");
 const swaggerUi = require("swagger-ui-express");
-import swaggerDocument from './swagger/swagger.json';
-const transbankRoutes = require('./routes/transbank.routes');
-
-// linkeo a variables, para que la url de swagger sea dinamica
-// const getServerUrl = () => {
-//     const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-//     const host = process.env.HOST || 'localhost';
-//     const port = process.env.PORT || 3000;
-//     return `${protocol}://${host}:${port}`;
-//   };
-
-// Inicializa Swagger-jsdoc
-// Inicializa
-const router = express(); //ejecuta express
 const cors = require("cors");
+const helmet = require("helmet"); // Nueva importación para seguridad
+import swaggerDocument from "./swagger/swagger.json";
 
-// settings
+// Inicialización de Express
+const router = express();
+
+// Configuración
 router.set("port", 3000);
-router.use(morgan("dev"));
-// router.use(bodyParser.json());
-router.use(
-  cors()
-  // { origin: [getServerUrl(),] } no descomentar si está en production
-);
-// router.use(bodyParser.json());
-router.use(express.json());
-router.use(express.static('public')); // Asegúrate de tener una carpeta 'public' en tu proyecto
-router.use("/", productosRoutes);
-router.use('/transbank', transbankRoutes);
-// routes
-router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Ruta para manejar todas las demás solicitudes no definidas - siempre dejar de los ultimos
+// Middleware
+router.use(morgan("dev")); // Logging
+router.use(cors()); // Habilitar CORS
+router.use(express.json()); // Parseo de JSON
+router.use(express.static("public")); // Servir archivos estáticos
+router.use(helmet()); // Seguridad adicional
+
+// Rutas
+router.use("/", productosRoutes);
+router.use("/transbank", transbankRoutes);
+
+// Documentación Swagger
+router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// Manejador de rutas no encontradas (404)
 router.use((req, res, next) => {
-  res.status(404).send('Revisar /api-docs para mayor información');
+  res.status(404).send("Revisar /api-docs para mayor información");
 });
+
 module.exports = router;

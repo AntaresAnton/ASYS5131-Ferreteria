@@ -1,51 +1,38 @@
-// import mysql from "promise-mysql";
-// const claves  = require('./../config');
+/**
+ * @fileoverview Módulo de conexión a la base de datos.
+ * @description Este módulo proporciona funciones para establecer y gestionar
+ * la conexión a la base de datos MySQL utilizando Sequelize.
+ * @author Johanna Hernández - Zaida König - Patricio Quintanilla
+ * @version 1.0
+ */
 
-// const connection = mysql.createConnection({
-//     host: claves.host,
-//     database: claves.database,
-//     user: claves.user,
-//     password: claves.password
-// });
-
-// const getConnection = async () => {
-//     return connection;
-// }
-
-// module.exports = {
-//     getConnection
-// }
-
-const { Sequelize } = require("sequelize");
-const claves = require("./../config");
-// const mysql = require('mysql2/promise');
-const mysql = require("promise-mysql");
+import { Sequelize } from 'sequelize';
+import claves from './../config';
 
 // Configuración de Sequelize
 const sequelize = new Sequelize(claves.database, claves.user, claves.password, {
   host: claves.host,
-  dialect: "mysql",
+  dialect: 'mysql',
 });
 
-// Definición del modelo de conexión
-// const Connection = sequelize.define('Connection');
-
-// Función para obtener la conexión
+/**
+ * Obtiene una conexión a la base de datos.
+ * @async
+ * @returns {Promise<Sequelize>} Una instancia de Sequelize autenticada.
+ * @throws {Error} Si no se puede establecer la conexión.
+ */
 const getConnection = async () => {
   try {
-    // Autenticar la conexión
     await sequelize.authenticate();
-    console.log("Conexión establecida correctamente.");
+    console.log('Conexión establecida correctamente.');
     return sequelize;
   } catch (error) {
-    console.error("No se pudo conectar a la base de datos:", error);
-    throw error;
+    console.error('No se pudo conectar a la base de datos:', error);
+    throw new Error('Error al conectar con la base de datos');
   }
 };
 
-// Exportar la función de conexión
-module.exports = {
+export {
   getConnection,
-  sequelize,
-  // Connection,
+  sequelize
 };
