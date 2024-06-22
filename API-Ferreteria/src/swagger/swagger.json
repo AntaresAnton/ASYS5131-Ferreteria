@@ -5,45 +5,122 @@
     "version": "1.0.0",
     "description": "API para gestionar productos de Ferretería y realizar pagos con Transbank"
   },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Producto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID del producto"
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del producto"
+          },
+          "precio": {
+            "type": "number",
+            "description": "Precio del producto en la moneda local"
+          },
+          "precio_en_dolares": {
+            "type": "string",
+            "description": "Precio del producto en dólares"
+          },
+          "valor_dolar_dia": {
+            "type": "string",
+            "description": "Valor del dólar en el día de la actualización"
+          },
+          "dolar_actualizado": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Fecha y hora de la última actualización del valor del dólar"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
   "paths": {
     "/productos": {
       "get": {
         "summary": "Obtener todos los productos",
         "description": "Retorna todos los productos disponibles.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Número máximo de productos a retornar"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            },
+            "description": "Número de productos a saltar"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Lista de productos obtenida exitosamente",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer",
-                        "description": "ID del producto"
-                      },
-                      "nombre": {
-                        "type": "string",
-                        "description": "Nombre del producto"
-                      },
-                      "precio": {
-                        "type": "number",
-                        "description": "Precio del producto en la moneda local"
-                      },
-                      "precio_en_dolares": {
-                        "type": "string",
-                        "description": "Precio del producto en dólares"
-                      },
-                      "valor_dolar_dia": {
-                        "type": "string",
-                        "description": "Valor del dólar en el día de la actualización"
-                      },
-                      "dolar_actualizado": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Fecha y hora de la última actualización del valor del dólar"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Producto"
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        },
+                        "next": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "previous": {
+                          "type": "string",
+                          "format": "uri"
+                        }
                       }
                     }
                   }
@@ -76,7 +153,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/Producto"
                 }
               }
             }
@@ -86,13 +163,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "El producto no se encuentra disponible."
-                    }
-                  }
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -102,13 +173,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Error en el servidor"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -127,7 +192,9 @@
             "required": true,
             "description": "Nombre del producto a obtener",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
             }
           }
         ],
@@ -137,7 +204,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Producto"
+                  }
                 }
               }
             }
@@ -147,13 +217,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "El producto no se encuentra disponible."
-                    }
-                  }
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -163,13 +227,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Error en el servidor"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -182,7 +240,15 @@
         "summary": "Obtiene información de divisas",
         "description": "Retorna una lista de divisas con sus detalles.",
         "parameters": [
-         
+          {
+            "in": "path",
+            "name": "nombre",
+            "required": true,
+            "description": "Nombre de la divisa",
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -212,7 +278,8 @@
                       },
                       "Fecha Actualización": {
                         "type": "string",
-                        "example": "29-05-2024 - 12:00",
+                        "format": "date-time",
+                        "example": "2024-05-29T12:00:00Z",
                         "description": "Fecha y hora de la última actualización"
                       }
                     }
@@ -226,13 +293,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Bad Request, url inválida"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -242,13 +303,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Error al obtener la información de divisas"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -269,19 +324,25 @@
                 "properties": {
                   "buyOrder": {
                     "type": "string",
-                    "example": "Set de herramientas"
+                    "example": "Set de herramientas",
+                    "minLength": 1,
+                    "maxLength": 100
                   },
                   "sessionId": {
                     "type": "string",
-                    "example": "sessionId"
+                    "example": "sessionId",
+                    "minLength": 1,
+                    "maxLength": 100
                   },
                   "amount": {
                     "type": "string",
-                    "example": "50000"
+                    "example": "50000",
+                    "pattern": "^[0-9]+$"
                   },
                   "returnUrl": {
                     "type": "string",
-                    "example": "http://localhost:3000/transbank/endPayment/"
+                    "example": "http://localhost:3000/transbank/endPayment/",
+                    "format": "uri"
                   }
                 },
                 "required": ["buyOrder", "sessionId", "amount", "returnUrl"]
@@ -303,6 +364,7 @@
                     },
                     "url": {
                       "type": "string",
+                      "format": "uri",
                       "example": "https://webpay3g.transbank.cl/webpayserver/initTransaction"
                     },
                     "token": {
@@ -315,11 +377,17 @@
             }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
     }
   }
 }
-

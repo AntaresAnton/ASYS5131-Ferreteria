@@ -1,3 +1,25 @@
+/**
+ * @file cron.js
+ * @description Este archivo configura y ejecuta tareas programadas (cron jobs) para el scraping de datos.
+ * 
+ * @requires node-cron
+ * @requires ./scraperdolar.controller
+ * 
+ * @overview
+ * Este script configura una tarea cron que se ejecuta cada minuto para realizar scraping de datos.
+ * Incluye manejo de errores, rate limiting básico y un mecanismo de cierre graceful.
+ * 
+ * Características principales:
+ * - Utiliza node-cron para programar la tarea de scraping.
+ * - Implementa un rate limiting básico para evitar sobrecarga en el sitio objetivo.
+ * - Maneja errores y los registra en la consola.
+ * - Proporciona un mecanismo de cierre graceful para terminar limpiamente el proceso.
+ * 
+ * @author [Johanna Hernández - Zaida König - Patricio Quintanilla]
+ * @version 1.0.0
+ * @date [21-06-2024]
+ */
+
 const cron = require("node-cron");
 const scrapeAndSave = require("./scraperdolar.controller");
 

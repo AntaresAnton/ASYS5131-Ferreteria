@@ -1,14 +1,52 @@
-// SELECT PROD.id_producto, PROD.nombre_producto, PROD.precio, (PROD.precio * divi.valor) AS precio_en_dolares FROM productos PROD INNER JOIN divisas DIVI ON prod.codigo_divisa = divi.codigo_divisa;
-
+/**
+ * @fileoverview Controlador de productos para la API de Ferretería
+ * @version 1.0.0
+ * @author Johanna Hernández - Zaida König - Patricio Quintanilla
+ * @description Este módulo contiene las funciones del controlador para manejar
+ * las operaciones relacionadas con productos y divisas en la API de Ferretería.
+ * 
+ * @module productos.controller
+ * 
+ * @requires sequelize
+ * @requires ../database/database
+ * 
+ * @exports {Object} products - Objeto que contiene las funciones del controlador
+ * 
+ * @example
+ * // Importar el controlador
+ * import { products } from './controllers/productos.controller';
+ * 
+ * // Usar una función del controlador
+ * router.get('/productos', products.obtenerProducto);
+ */
 import { getConnection } from "./../database/database";
 const sequelize = require("../database/database");
+
+// Constants
+const HTTP_STATUS = {
+  OK: 200,
+  NOT_FOUND: 404,
+  INTERNAL_SERVER_ERROR: 500
+};
+
+const MESSAGES = {
+  NO_PRODUCTS: "No hay productos disponibles.",
+  PRODUCT_NOT_FOUND: "El producto no se encuentra disponible.",
+  BAD_REQUEST: "Bad Request, url inválida"
+};
+
+// Helper function for error handling
+const handleError = (res, error) => {
+  console.error(error);
+  res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: error.message });
+};
 
 // PARA OBTENER LOS RESULTADOS
 const obtenerProducto = async (req, res) => {
   try {
     const sequelize = await getConnection();
-    const [result, metadata] = await sequelize.query(
-      `SELECT 
+    const [result, metadata] = await sequelize.query(`
+      SELECT 
         PROD.id, 
         PROD.sku,
         PROD.nombre,
@@ -18,131 +56,118 @@ const obtenerProducto = async (req, res) => {
         PROD.cantidad_disponible AS stock_disponible,
         DIVI.valor as valor_dolar_dia,
         DATE_FORMAT(DIVI.actualizado_el, '%d-%m-%Y - %H:%i') as fecha_actualizacion_dolar
-        FROM productos PROD 
-        INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa;
-     `
-    );
+      FROM productos PROD 
+      INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa;
+    `);
 
-    // Verificar si hay resultados
     if (result.length === 0) {
-      console.log("No hay productos disponibles.");
-      return res.status(404).json({ message: "No hay productos disponibles." });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ message: MESSAGES.NO_PRODUCTS });
     }
-    // console.log(result);
     res.json(result);
   } catch (error) {
-    res.status(500);
-    res.send(error.message);
+    handleError(res, error);
   }
 };
 
 // PARA OBTENERLOS POR id
 const productoPorID = async (req, res) => {
   try {
-    // console.log(req.params)
     const { id } = req.params;
+    if (!id || isNaN(id)) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: "ID inválido" });
+    }
+
     const sequelize = await getConnection();
-    const [result, metadata] = await sequelize.query(
-      `
-            SELECT 
-            PROD.id, 
-            PROD.sku,
-            PROD.nombre,
-            PROD.descripcion,
-            CAT.nombre_categoria as categoria,
-            PROD.marca,
-            PROD.precio, ROUND(PROD.precio / DIVI.valor,2) AS precio_en_dolares,
-            PROD.cantidad_disponible AS stock_disponible,
-            DIVI.valor as valor_dolar_dia,
-            DATE_FORMAT(DIVI.actualizado_el, '%d-%m-%Y - %H:%i') as fecha_actualizacion_dolar
-            FROM productos PROD 
-            INNER JOIN categoria CAT on PROD.id_categoria = CAT.id
-            INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa
-            WHERE PROD.id=${id}`
-    );
-    // console.log(result);
-    // Verificar si hay resultados
+    const [result, metadata] = await sequelize.query(`
+      SELECT 
+        PROD.id, 
+        PROD.sku,
+        PROD.nombre,
+        PROD.descripcion,
+        CAT.nombre_categoria as categoria,
+        PROD.marca,
+        PROD.precio, ROUND(PROD.precio / DIVI.valor,2) AS precio_en_dolares,
+        PROD.cantidad_disponible AS stock_disponible,
+        DIVI.valor as valor_dolar_dia,
+        DATE_FORMAT(DIVI.actualizado_el, '%d-%m-%Y - %H:%i') as fecha_actualizacion_dolar
+      FROM productos PROD 
+      INNER JOIN categoria CAT on PROD.id_categoria = CAT.id
+      INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa
+      WHERE PROD.id = :id
+    `, {
+      replacements: { id },
+      type: sequelize.QueryTypes.SELECT
+    });
+
     if (result.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "El producto no se encuentra disponible." });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ message: MESSAGES.PRODUCT_NOT_FOUND });
     }
     res.json(result);
   } catch (error) {
-    res.status(500);
-    res.send(error.message);
+    handleError(res, error);
   }
 };
 
 const productoPorNombre = async (req, res) => {
   try {
     const { nombre } = req.params;
+    if (!nombre) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: "Nombre inválido" });
+    }
+
     const sequelize = await getConnection();
-    const [results, metadata] = await sequelize.query(
-      `SELECT 
-                PROD.id, 
-                PROD.nombre,
-                CAT.nombre_categoria as categoria,
-                PROD.precio, 
-                ROUND(PROD.precio / DIVI.valor, 2) AS precio_en_dolares,
-                DIVI.valor as valor_dolar_dia,
-                DIVI.actualizado_el as dolar_actualizado
-            FROM productos PROD 
-            INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa 
-            INNER JOIN categoria CAT on PROD.id_categoria = CAT.id 
-            WHERE PROD.nombre = :nombre`,
-      {
-        replacements: { nombre },
-        type: sequelize.QueryTypes.SELECT,
-      }
-    );
+    const results = await sequelize.query(`
+      SELECT 
+        PROD.id, 
+        PROD.nombre,
+        CAT.nombre_categoria as categoria,
+        PROD.precio, 
+        ROUND(PROD.precio / DIVI.valor, 2) AS precio_en_dolares,
+        DIVI.valor as valor_dolar_dia,
+        DIVI.actualizado_el as dolar_actualizado
+      FROM productos PROD 
+      INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa 
+      INNER JOIN categoria CAT on PROD.id_categoria = CAT.id 
+      WHERE PROD.nombre = :nombre
+    `, {
+      replacements: { nombre },
+      type: sequelize.QueryTypes.SELECT,
+    });
 
     if (results.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "El producto no se encuentra disponible." });
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ message: MESSAGES.PRODUCT_NOT_FOUND });
     }
     res.json(results);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    handleError(res, error);
   }
 };
 
-
 const getDivisas = async (req, res) => {
   try {
-    const { nombre } = req.params;
     const sequelize = await getConnection();
-    const [results, metadata] = await sequelize.query(
-      `
+    const results = await sequelize.query(`
       SELECT
       codigo_divisa,
       nombre_divisa,
       valor,
       DATE_FORMAT(actualizado_el, '%d-%m-%Y - %H:%i') as 'Fecha Actualización'
       FROM divisas
-      `,
-      {
-        replacements: { nombre },
-        type: sequelize.QueryTypes.SELECT,
-      }
-    );
+    `, {
+      type: sequelize.QueryTypes.SELECT
+    });
 
     if (results.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "Bad Request, url inválida" });
+      return res.status(404).json({ message: "No hay divisas disponibles." });
     }
     res.json(results);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    handleError(res, error);
   }
 };
 
-// INSERT INTO productos ( nombre, descripcion, precio, codigo_divisa, cantidad_disponible, id_categoria) VALUES ('pala', 'nunca hay agarrao una pala', '29990', 'USD', '25', '3');
 
 export const products = {
-  // GET
   obtenerProducto,
   productoPorID,
   productoPorNombre,
