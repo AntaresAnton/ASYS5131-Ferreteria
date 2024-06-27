@@ -35,5 +35,3 @@ process.on('SIGTERM', () => {
     process.exit(0);
   });
 });
-
-// Aquí irían las definiciones de rutas y otros middlewares específicos de la API

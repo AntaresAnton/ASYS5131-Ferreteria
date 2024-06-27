@@ -1,17 +1,45 @@
 const express = require("express");
 const router = express.Router();
-import { products as productosController } from "../controllers/productos.controller";
+const { products: productosController } = require("../controllers/productos.controller");
 
-router.get("/productos", (req, res) => {
-  // Lógica para obtener todos los productos
-  productosController.obtenerProducto(req, res);
-});
-router.get("/productos/:id", (req, res) => {
-  // Lógica para obtener un producto por ID
-  productosController.productoPorID(req, res);
-});
-router.get("/productos/nombre/:nombre", productosController.productoPorNombre);
+// Middleware para manejo de errores
+const errorHandler = (err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Ocurrió un error en el servidor' });
+};
 
-router.get("/divisas", productosController.getDivisas)
+router.get("/productos", (req, res, next) => {
+  try {
+    productosController.obtenerProducto(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/productos/:id", (req, res, next) => {
+  try {
+    productosController.productoPorID(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/productos/nombre/:nombre", (req, res, next) => {
+  try {
+    productosController.productoPorNombre(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/divisas", (req, res, next) => {
+  try {
+    productosController.getDivisas(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.use(errorHandler);
 
 module.exports = router;

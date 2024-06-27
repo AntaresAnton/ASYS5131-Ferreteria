@@ -111,12 +111,16 @@ const productoPorID = async (req, res) => {
 const productoPorNombre = async (req, res) => {
   try {
     const { nombre } = req.params;
-    if (!nombre) {
+    if (!nombre || nombre.length < 2 || nombre.length > 100 || !/^[a-zA-Z0-9\s]+$/.test(nombre)) {
       return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: "Nombre inválido" });
     }
 
     const sequelize = await getConnection();
-    const results = await sequelize.query(`
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+
+    const query = `
       SELECT 
         PROD.id, 
         PROD.nombre,
@@ -124,24 +128,33 @@ const productoPorNombre = async (req, res) => {
         PROD.precio, 
         ROUND(PROD.precio / DIVI.valor, 2) AS precio_en_dolares,
         DIVI.valor as valor_dolar_dia,
-        DIVI.actualizado_el as dolar_actualizado
+        DATE_FORMAT(DIVI.actualizado_el, '%d-%m-%Y - %H:%i') as dolar_actualizado
       FROM productos PROD 
       INNER JOIN divisas DIVI ON PROD.codigo_divisa = DIVI.codigo_divisa 
       INNER JOIN categoria CAT on PROD.id_categoria = CAT.id 
-      WHERE PROD.nombre = :nombre
-    `, {
-      replacements: { nombre },
+      WHERE PROD.nombre = ?
+      LIMIT ? OFFSET ?
+    `;
+
+    const results = await sequelize.query(query, {
+      replacements: [nombre, limit, offset],
       type: sequelize.QueryTypes.SELECT,
     });
 
     if (results.length === 0) {
       return res.status(HTTP_STATUS.NOT_FOUND).json({ message: MESSAGES.PRODUCT_NOT_FOUND });
     }
-    res.json(results);
+    res.json({
+      page,
+      limit,
+      results
+    });
   } catch (error) {
+    console.error('Error en productoPorNombre:', error);
     handleError(res, error);
   }
 };
+
 
 const getDivisas = async (req, res) => {
   try {

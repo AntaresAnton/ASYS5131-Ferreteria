@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/database/database.js</title>
+    <title>Code coverage report for src/controllers/cron.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/database</a> database.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/controllers</a> cron.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.25% </span>
+                <span class="strong">55% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/16</span>
+                <span class='fraction'>11/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.25% </span>
+                <span class="strong">55.55% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/16</span>
+                <span class='fraction'>10/18</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -123,24 +123,7 @@
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<a name='L61'></a><a href='#L61'>61</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -158,106 +141,108 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * @fileoverview Módulo de conexión a la base de datos.
- * @description Este módulo proporciona funciones para establecer y gestionar
- * la conexión a la base de datos MySQL utilizando Sequelize.
- * @author Johanna Hernández - Zaida König - Patricio Quintanilla
- * @version 1.1
+ * @file cron.js
+ * @description Este archivo configura y ejecuta tareas programadas (cron jobs) para el scraping de datos.
+ * 
+ * @requires node-cron
+ * @requires ./scraperdolar.controller
+ * 
+ * @overview
+ * Este script configura una tarea cron que se ejecuta cada minuto para realizar scraping de datos.
+ * Incluye manejo de errores, rate limiting básico y un mecanismo de cierre graceful.
+ * 
+ * Características principales:
+ * - Utiliza node-cron para programar la tarea de scraping.
+ * - Implementa un rate limiting básico para evitar sobrecarga en el sitio objetivo.
+ * - Maneja errores y los registra en la consola.
+ * - Proporciona un mecanismo de cierre graceful para terminar limpiamente el proceso.
+ * 
+ * @author [Johanna Hernández - Zaida König - Patricio Quintanilla]
+ * @version 1.0.0
+ * @date [21-06-2024]
  */
 &nbsp;
-import { Sequelize } from 'sequelize';
-import claves from './../config';
+const cron = require("node-cron");
+const scrapeAndSave = require("./scraperdolar.controller");
 &nbsp;
-// Configuración de Sequelize con pool de conexiones
-const sequelize = new Sequelize(claves.database, claves.user, claves.password, {
-  host: claves.host,
-  dialect: 'mysql',
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  },
-  logging: console.log // Puedes cambiar esto a false para desactivar el logging en producción
+let isShuttingDown = false;
+&nbsp;
+// Programa una tarea para que se ejecute cada minuto (puedes ajustar esto según necesites)
+cron.schedule("*/1 * * * *", async () =&gt; {
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (isShuttingDown) <span class="cstat-no" title="statement not covered" >return;</span>
+&nbsp;
+  try {
+    console.log(`[${new Date().toISOString()}] Iniciando scraping...`);
+    
+    // Implementar rate limiting básico
+    await new Promise(resolve =&gt; setTimeout(resolve, 1000)); // Espera 1 segundo antes de cada scraping
+&nbsp;
+    // Llama a tu función de scraping aquí
+<span class="cstat-no" title="statement not covered" >    await scrapeAndSave();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    console.log(`[${new Date().toISOString()}] Scraping completado exitosamente`);</span>
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error(`[${new Date().toISOString()}] Error en la tarea cron:`, error);</span>
+    // Aquí podrías implementar algún tipo de notificación si lo deseas
+  }
 });
 &nbsp;
-/**
- * Obtiene una conexión a la base de datos.
- * @async
- * @returns {Promise&lt;Sequelize&gt;} Una instancia de Sequelize autenticada.
- * @throws {Error} Si no se puede establecer la conexión.
- */
-const getConnection = async () =&gt; {
-  try {
-    await sequelize.authenticate();
-    console.log('Conexión establecida correctamente.');
-    return sequelize;
-  } catch (error) {
-<span class="cstat-no" title="statement not covered" >    console.error('No se pudo conectar a la base de datos:', error.message);</span>
-<span class="cstat-no" title="statement not covered" >    throw new Error(`Error al conectar con la base de datos: ${error.message}`);</span>
-  }
-};
+// Manejo de cierre graceful
+process.on('SIGTERM', gracefulShutdown);
+process.on('SIGINT', gracefulShutdown);
 &nbsp;
-/**
- * Cierra la conexión a la base de datos.
- * @async
- */
-const closeConnection = async () =&gt; {
-  try {
-    await sequelize.close();
-    console.log('Conexión cerrada correctamente.');
-  } catch (error) {
-<span class="cstat-no" title="statement not covered" >    console.error('Error al cerrar la conexión:', error.message);</span>
-  }
-};
-&nbsp;
-// Manejar el cierre de la aplicación
-process.on('SIGINT', async () =&gt; {
-  await closeConnection();
-  process.exit(0);
-});
-&nbsp;
-export {
-  getConnection,
-  sequelize,
-  closeConnection
-};
+function <span class="fstat-no" title="function not covered" >gracefulShutdown(</span>) {
+<span class="cstat-no" title="statement not covered" >  isShuttingDown = true;</span>
+<span class="cstat-no" title="statement not covered" >  console.log('Cerrando...');</span>
+  // Dar tiempo para que las operaciones en curso terminen
+<span class="cstat-no" title="statement not covered" >  setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    console.log('Cierre completado');</span>
+<span class="cstat-no" title="statement not covered" >    process.exit(0);</span>
+  }, 5000); // Espera 5 segundos antes de cerrar
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
