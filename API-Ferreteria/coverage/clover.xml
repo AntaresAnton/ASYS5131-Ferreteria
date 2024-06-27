@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1719529368878" clover="3.2.0">
-  <project timestamp="1719529368878" name="All files">
-    <metrics statements="217" coveredstatements="137" conditionals="64" coveredconditionals="31" methods="29" coveredmethods="17" elements="310" coveredelements="185" complexity="0" loc="217" ncloc="217" packages="5" files="11" classes="11"/>
+<coverage generated="1719531423069" clover="3.2.0">
+  <project timestamp="1719531423069" name="All files">
+    <metrics statements="175" coveredstatements="142" conditionals="58" coveredconditionals="39" methods="22" coveredmethods="20" elements="255" coveredelements="201" complexity="0" loc="175" ncloc="175" packages="5" files="9" classes="9"/>
     <package name="src">
       <metrics statements="28" coveredstatements="27" conditionals="12" coveredconditionals="6" methods="2" coveredmethods="2"/>
       <file name="app.js" path="C:\Users\patri\OneDrive\Documentos\GitHub\ASYS5131-Ferreteria\API-Ferreteria\src\app.js">
@@ -40,28 +40,7 @@
       </file>
     </package>
     <package name="src.controllers">
-      <metrics statements="92" coveredstatements="54" conditionals="28" coveredconditionals="15" methods="12" coveredmethods="7"/>
-      <file name="cron.js" path="C:\Users\patri\OneDrive\Documentos\GitHub\ASYS5131-Ferreteria\API-Ferreteria\src\controllers\cron.js">
-        <metrics statements="18" coveredstatements="10" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="2"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="24" count="1" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
-        <line num="30" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="32" count="1" type="stmt"/>
-        <line num="33" count="1" type="stmt"/>
-        <line num="36" count="1" type="stmt"/>
-        <line num="39" count="0" type="stmt"/>
-        <line num="41" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="49" count="1" type="stmt"/>
-        <line num="50" count="1" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="54" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
-        <line num="58" count="0" type="stmt"/>
-      </file>
+      <metrics statements="50" coveredstatements="38" conditionals="22" coveredconditionals="14" methods="5" coveredmethods="5"/>
       <file name="productos.controller.js" path="C:\Users\patri\OneDrive\Documentos\GitHub\ASYS5131-Ferreteria\API-Ferreteria\src\controllers\productos.controller.js">
         <metrics statements="50" coveredstatements="38" conditionals="22" coveredconditionals="14" methods="5" coveredmethods="5"/>
         <line num="23" count="3" type="stmt"/>
@@ -115,33 +94,6 @@
         <line num="178" count="2" type="stmt"/>
         <line num="183" count="3" type="stmt"/>
       </file>
-      <file name="scraperdolar.controller.js" path="C:\Users\patri\OneDrive\Documentos\GitHub\ASYS5131-Ferreteria\API-Ferreteria\src\controllers\scraperdolar.controller.js">
-        <metrics statements="24" coveredstatements="6" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
-        <line num="41" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="54" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="57" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="58" count="0" type="stmt"/>
-        <line num="60" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="68" count="0" type="stmt"/>
-        <line num="69" count="0" type="stmt"/>
-        <line num="71" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="72" count="0" type="stmt"/>
-        <line num="74" count="0" type="stmt"/>
-        <line num="79" count="1" type="stmt"/>
-      </file>
     </package>
     <package name="src.database">
       <metrics statements="16" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
@@ -166,7 +118,7 @@
       </file>
     </package>
     <package name="src.routes">
-      <metrics statements="63" coveredstatements="33" conditionals="6" coveredconditionals="5" methods="8" coveredmethods="4"/>
+      <metrics statements="63" coveredstatements="51" conditionals="6" coveredconditionals="5" methods="8" coveredmethods="7"/>
       <file name="productos.routes.js" path="C:\Users\patri\OneDrive\Documentos\GitHub\ASYS5131-Ferreteria\API-Ferreteria\src\routes\productos.routes.js">
         <metrics statements="24" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="4"/>
         <line num="1" count="3" type="stmt"/>
@@ -195,76 +147,76 @@
         <line num="45" count="3" type="stmt"/>
       </file>
       <file name="transbank.routes.js" path="C:\Users\patri\OneDrive\Documentos\GitHub\ASYS5131-Ferreteria\API-Ferreteria\src\routes\transbank.routes.js">
-        <metrics statements="39" coveredstatements="15" conditionals="6" coveredconditionals="5" methods="3" coveredmethods="0"/>
-        <line num="69" count="3" type="stmt"/>
-        <line num="70" count="3" type="stmt"/>
-        <line num="71" count="3" type="stmt"/>
-        <line num="72" count="3" type="stmt"/>
-        <line num="73" count="3" type="stmt"/>
-        <line num="74" count="3" type="stmt"/>
-        <line num="77" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="78" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="79" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="81" count="3" type="stmt"/>
-        <line num="83" count="3" type="stmt"/>
-        <line num="86" count="3" type="stmt"/>
-        <line num="87" count="0" type="stmt"/>
-        <line num="88" count="0" type="stmt"/>
-        <line num="91" count="0" type="stmt"/>
-        <line num="93" count="0" type="stmt"/>
-        <line num="94" count="0" type="stmt"/>
-        <line num="96" count="0" type="stmt"/>
+        <metrics statements="39" coveredstatements="33" conditionals="6" coveredconditionals="5" methods="3" coveredmethods="3"/>
+        <line num="69" count="5" type="stmt"/>
+        <line num="70" count="5" type="stmt"/>
+        <line num="71" count="5" type="stmt"/>
+        <line num="72" count="5" type="stmt"/>
+        <line num="73" count="5" type="stmt"/>
+        <line num="74" count="5" type="stmt"/>
+        <line num="77" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="78" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="79" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="81" count="5" type="stmt"/>
+        <line num="83" count="5" type="stmt"/>
+        <line num="86" count="5" type="stmt"/>
+        <line num="87" count="4" type="stmt"/>
+        <line num="88" count="4" type="stmt"/>
+        <line num="91" count="4" type="stmt"/>
+        <line num="93" count="4" type="stmt"/>
+        <line num="94" count="4" type="stmt"/>
+        <line num="96" count="4" type="stmt"/>
         <line num="102" count="0" type="stmt"/>
         <line num="103" count="0" type="stmt"/>
-        <line num="108" count="3" type="stmt"/>
-        <line num="109" count="0" type="stmt"/>
-        <line num="110" count="0" type="stmt"/>
-        <line num="111" count="0" type="stmt"/>
-        <line num="113" count="0" type="stmt"/>
-        <line num="114" count="0" type="stmt"/>
-        <line num="116" count="0" type="stmt"/>
+        <line num="108" count="5" type="stmt"/>
+        <line num="109" count="1" type="stmt"/>
+        <line num="110" count="1" type="stmt"/>
+        <line num="111" count="1" type="stmt"/>
+        <line num="113" count="1" type="stmt"/>
+        <line num="114" count="1" type="stmt"/>
+        <line num="116" count="1" type="stmt"/>
         <line num="120" count="0" type="stmt"/>
         <line num="121" count="0" type="stmt"/>
-        <line num="126" count="3" type="stmt"/>
-        <line num="127" count="0" type="stmt"/>
-        <line num="128" count="0" type="stmt"/>
-        <line num="129" count="0" type="stmt"/>
-        <line num="131" count="0" type="stmt"/>
+        <line num="126" count="5" type="stmt"/>
+        <line num="127" count="1" type="stmt"/>
+        <line num="128" count="1" type="stmt"/>
+        <line num="129" count="1" type="stmt"/>
+        <line num="131" count="1" type="stmt"/>
         <line num="132" count="0" type="stmt"/>
         <line num="134" count="0" type="stmt"/>
-        <line num="139" count="0" type="stmt"/>
-        <line num="140" count="0" type="stmt"/>
-        <line num="144" count="3" type="stmt"/>
+        <line num="139" count="1" type="stmt"/>
+        <line num="140" count="1" type="stmt"/>
+        <line num="144" count="5" type="stmt"/>
       </file>
     </package>
     <package name="src.utils">
-      <metrics statements="18" coveredstatements="10" conditionals="18" coveredconditionals="5" methods="4" coveredmethods="1"/>
+      <metrics statements="18" coveredstatements="13" conditionals="18" coveredconditionals="14" methods="4" coveredmethods="3"/>
       <file name="error.js" path="C:\Users\patri\OneDrive\Documentos\GitHub\ASYS5131-Ferreteria\API-Ferreteria\src\utils\error.js">
         <metrics statements="5" coveredstatements="3" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="1"/>
         <line num="3" count="0" type="stmt"/>
         <line num="4" count="0" type="stmt"/>
-        <line num="9" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="10" count="4" type="stmt"/>
-        <line num="16" count="5" type="stmt"/>
+        <line num="9" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="16" count="7" type="stmt"/>
       </file>
       <file name="logger.js" path="C:\Users\patri\OneDrive\Documentos\GitHub\ASYS5131-Ferreteria\API-Ferreteria\src\utils\logger.js">
         <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
-        <line num="1" count="4" type="stmt"/>
-        <line num="3" count="4" type="stmt"/>
-        <line num="13" count="4" type="cond" truecount="1" falsecount="1"/>
-        <line num="14" count="4" type="stmt"/>
-        <line num="19" count="4" type="stmt"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="13" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="14" count="6" type="stmt"/>
+        <line num="19" count="6" type="stmt"/>
       </file>
       <file name="validators.js" path="C:\Users\patri\OneDrive\Documentos\GitHub\ASYS5131-Ferreteria\API-Ferreteria\src\utils\validators.js">
-        <metrics statements="8" coveredstatements="2" conditionals="12" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="1" count="4" type="stmt"/>
-        <line num="4" count="0" type="cond" truecount="0" falsecount="6"/>
+        <metrics statements="8" coveredstatements="5" conditionals="12" coveredconditionals="9" methods="2" coveredmethods="2"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="4" count="4" type="cond" truecount="5" falsecount="1"/>
         <line num="5" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="7" count="4" type="cond" truecount="3" falsecount="1"/>
         <line num="8" count="0" type="stmt"/>
-        <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="14" count="2" type="cond" truecount="1" falsecount="1"/>
         <line num="15" count="0" type="stmt"/>
-        <line num="19" count="4" type="stmt"/>
+        <line num="19" count="6" type="stmt"/>
       </file>
     </package>
   </project>
