@@ -1,3 +1,5 @@
 {"level":"error","message":"Error confirming payment: AxiosError: Request failed with status code 422\nInvalid status '0' for transaction while authorizing. Commerce will be notified by webpay to authorize\n","service":"transbank-service"}
 {"level":"error","message":"Error confirming payment: AxiosError: Request failed with status code 422\nInvalid status '0' for transaction while authorizing. Commerce will be notified by webpay to authorize\n","service":"transbank-service"}
 {"level":"error","message":"Error confirming payment: AxiosError: Request failed with status code 422\nInvalid status '0' for transaction while authorizing. Commerce will be notified by webpay to authorize\n","service":"transbank-service"}
+{"level":"error","message":"Error initiating payment: Invalid amount","service":"transbank-service"}
+{"level":"error","message":"Error initiating payment: Invalid amount","service":"transbank-service"}

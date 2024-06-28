@@ -16,3 +16,5 @@
 {"level":"info","message":"Payment status checked: {\"amount\":50000,\"status\":\"INITIALIZED\",\"buy_order\":\"Orden de compra\",\"session_id\":\"sessionId\",\"accounting_date\":\"0627\",\"transaction_date\":\"2024-06-27T23:36:59.612Z\",\"installments_number\":0}","service":"transbank-service"}
 {"level":"info","message":"Payment initiated: {\"token\":\"01ab3c701a79e5ff80981d46c44b326de50ca10e957da3e953b1817322d71c19\",\"url\":\"https://webpay3gint.transbank.cl/webpayserver/initTransaction\"}","service":"transbank-service"}
 {"level":"error","message":"Error confirming payment: AxiosError: Request failed with status code 422\nInvalid status '0' for transaction while authorizing. Commerce will be notified by webpay to authorize\n","service":"transbank-service"}
+{"level":"error","message":"Error initiating payment: Invalid amount","service":"transbank-service"}
+{"level":"error","message":"Error initiating payment: Invalid amount","service":"transbank-service"}
