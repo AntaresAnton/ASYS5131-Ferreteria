@@ -1,10 +1,10 @@
 /**
  * Módulo de Conexión a la Base de Datos
- * 
+ *
  * Este módulo establece una conexión a una base de datos MySQL utilizando un pool de conexiones.
  * Utiliza un enfoque basado en promesas para un mejor manejo asíncrono e incluye una gestión
  * adecuada de errores y cierre de conexión.
- * 
+ *
  * El módulo exporta funciones para obtener una conexión del pool y para liberar una conexión.
  * Está diseñado para ser robusto, seguro y mantenible, con un manejo de errores mejorado
  * y capacidades de registro avanzadas.
@@ -12,6 +12,7 @@
 
 const mysql = require("mysql2/promise");
 const winston = require('winston');
+const axios = require('axios'); // Importar axios para hacer solicitudes HTTP
 
 // Configurar el logger Winston con formato JSON
 const logger = winston.createLogger({
@@ -75,7 +76,7 @@ async function liberarConexion(conexion, throwError = false) {
     conexion.release();
     logger.info("Conexión liberada al pool");
   } catch (err) {
-    const errorMessage = err.code 
+    const errorMessage = err.code
       ? `Error MySQL (${err.code}) al liberar la conexión: ${err.message}`
       : `Error desconocido al liberar la conexión: ${err}`;
     logger.error(errorMessage);
@@ -89,7 +90,7 @@ async function cerrarPool() {
     await pool.end();
     logger.info("Pool de conexiones cerrado");
   } catch (err) {
-    const errorMessage = err.code 
+    const errorMessage = err.code
       ? `Error MySQL (${err.code}) al cerrar el pool de conexiones: ${err.message}`
       : `Error desconocido al cerrar el pool de conexiones: ${err}`;
     logger.error(errorMessage);
@@ -113,4 +114,24 @@ function cierreGraceful() {
 process.on('SIGINT', cierreGraceful);
 process.on('SIGTERM', cierreGraceful);
 
-module.exports = { obtenerConexion, liberarConexion, cerrarPool };
+// Función para realizar el scraping y guardar en la base de datos
+async function scrapeAndSave() {
+  try {
+    const conexion = await obtenerConexion();
+    const response = await axios.get('https://mindicador.cl/api');
+    const data = response.data;
+
+    // Procesar los datos de la API y guardarlos en la base de datos
+    const dolarValue = data.dolar.valor;
+    const query = "UPDATE divisas SET valor = ? WHERE divisas.codigo_divisa = 'USD'";
+    const values = [dolarValue];
+    await conexion.query(query, values);
+
+    await liberarConexion(conexion);
+    logger.info('Scraping y guardado de datos completado');
+  } catch (err) {
+    logger.error('Error al realizar el scraping y guardar los datos:', { error: err });
+  }
+}
+
+module.exports = { obtenerConexion, liberarConexion, cerrarPool, scrapeAndSave };

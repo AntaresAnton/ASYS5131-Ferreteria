@@ -1,25 +1,25 @@
-const { validateEnvVariables } = require('../controllers/scraperdolar.controller')
+const scrapeAndSave = require('../controllers/scraperdolar.controller');
+const { obtenerConexion, liberarConexion } = require('./database');
 
-describe('validateEnvVariables', () => {
-  it('should throw an error if required environment variables are missing', () => {
-    process.env.REQUIRED_VAR = ''
-    expect(() => validateEnvVariables()).toThrow('Missing required environment variables')
-  })
+describe('scrapeAndSave', () => {
+  let conexion;
 
-  it('should not throw an error if all required environment variables are present', () => {
-    process.env.REQUIRED_VAR = 'some_value'
-    expect(() => validateEnvVariables()).not.toThrow()
-  })
+  beforeAll(async () => {
+    conexion = await obtenerConexion();
+    await conexion.query('TRUNCATE TABLE divisas'); // Limpiar la tabla divisas antes de la prueba
+  });
 
-  it('should handle multiple required environment variables', () => {
-    process.env.REQUIRED_VAR_1 = 'value1'
-    process.env.REQUIRED_VAR_2 = 'value2'
-    expect(() => validateEnvVariables()).not.toThrow()
-  })
+  afterAll(async () => {
+    await liberarConexion(conexion);
+  });
 
-  it('should throw an error if any one of multiple required environment variables is missing', () => {
-    process.env.REQUIRED_VAR_1 = 'value1'
-    process.env.REQUIRED_VAR_2 = ''
-    expect(() => validateEnvVariables()).toThrow('Missing required environment variables')
-  })
-})
+  it('debe guardar correctamente los valores de divisas en la base de datos', async () => {
+    await scrapeAndSave();
+
+    const [rows] = await conexion.query('SELECT * FROM divisas');
+
+    expect(rows.length).toBe(2); // Esperamos dos filas (dólar y UF)
+    expect(rows.some(row => row.codigo_divisa === 'USD' && row.nombre_divisa === 'Dólar')).toBe(true);
+    expect(rows.some(row => row.codigo_divisa === 'CLF' && row.nombre_divisa === 'Unidad de Fomento')).toBe(true);
+  });
+});
