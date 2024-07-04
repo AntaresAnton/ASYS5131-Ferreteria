@@ -1,5 +1,5 @@
-const scrapeAndSave = require('../controllers/scraperdolar.controller');
-const { obtenerConexion, liberarConexion } = require('./database');
+const scrapeAndSave = require('../src/controllers/scraperdolar.controller');
+const { obtenerConexion, liberarConexion } = require('../src/database/database');
 
 describe('scrapeAndSave', () => {
   let conexion;

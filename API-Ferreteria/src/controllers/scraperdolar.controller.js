@@ -25,14 +25,6 @@ const logger = winston.createLogger({
   ]
 });
 
-// Validar variables de entorno
-const requiredEnvVars = ['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASSWORD'];
-for (const envVar of requiredEnvVars) {
-  if (!process.env[envVar]) {
-    logger.error(`Variable de entorno ${envVar} no está definida`);
-    process.exit(1);
-  }
-}
 
 // Configuración de la conexión a la base de datos usando variables de entorno
 const dbConfig = {
@@ -134,4 +126,4 @@ async function scrapeAndSave() {
   }
 }
 
-module.exports = { obtenerConexion, liberarConexion, cerrarPool, scrapeAndSave };
+module.exports = { scrapeAndSave, obtenerConexion, liberarConexion, cerrarPool };
